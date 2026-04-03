@@ -22,7 +22,6 @@ const translations = {
       about: "Chi siamo",
       community: "Community",
       space: "Lo spazio",
-      traent: "Traent",
       contact: "Contatti",
     },
     hero: {
@@ -53,7 +52,7 @@ const translations = {
     },
     community: {
       label: "La community",
-      title: "Per chi cerca stimoli e nuove prospettive.",
+      title: <>Per chi cerca <span className="text-pop italic font-bold">stimoli e nuove prospettive</span>.</>,
       personas: [
         { idx: "01", title: "Founder", icon: "◆", desc: "Stai costruendo qualcosa di nuovo. Qui trovi co-founder, advisor e le prime conversazioni che contano davvero." },
         { idx: "02", title: "Dev & tech", icon: "⚡", desc: "Professionisti che vogliono lavorare circondati da eccellenza. Codice, architetture, confronto reale." },
@@ -75,18 +74,6 @@ const translations = {
       label: "Manifesto",
       line: "Non cerchiamo spazi silenziosi. Cerchiamo persone rumorose — che costruiscono, discutono, e fanno accadere le cose.",
       note: "Traent Hub è pensato per chi crede che le idee migliori nascano dal confronto. Se cerchi un ambiente dinamico e persone con cui scambiare visioni, sei nel posto giusto."
-    },
-    traent: {
-      label: "L'orbita",
-      title: "Powered by Traent.",
-      prose1: "Traent Hub nasce nell'orbita di Traent: un'azienda costruita su tecnologia, infrastruttura e innovazione di lungo periodo. Questo non è un coworking generico — è un ecosistema progettato per chi vuole pensare più in grande e costruire con sostanza.",
-      prose2: "La vicinanza a Traent significa accesso a un mondo tech reale. Significa conversazioni con chi sta costruendo infrastruttura digitale di nuova generazione, non slide deck.",
-      card: {
-        label: "Company",
-        name: "Traent",
-        desc: "Tecnologia. Trasparenza. Infrastruttura digitale.",
-        cta: "Scopri Traent"
-      }
     },
     location: {
       label: "Contatti",
@@ -113,7 +100,6 @@ const translations = {
       about: "About",
       community: "Community",
       space: "The Space",
-      traent: "Traent",
       contact: "Contact",
     },
     hero: {
@@ -144,7 +130,7 @@ const translations = {
     },
     community: {
       label: "Community",
-      title: "For those seeking inspiration and new perspectives.",
+      title: <>For those seeking <span className="text-pop italic font-bold">inspiration and new perspectives</span>.</>,
       personas: [
         { idx: "01", title: "Founders", icon: "◆", desc: "You're building something new. Here you find co-founders, advisors and the early conversations that truly matter." },
         { idx: "02", title: "Dev & tech", icon: "⚡", desc: "Professionals who want to work surrounded by excellence. Code, architectures, real exchange." },
@@ -166,18 +152,6 @@ const translations = {
       label: "Manifesto",
       line: "We don't look for quiet spaces. We look for loud people — who build, debate, and make things happen.",
       note: "Traent Hub is designed for those who believe the best ideas come from exchange. If you're looking for a dynamic environment and people to share visions with, you're in the right place."
-    },
-    traent: {
-      label: "The Orbit",
-      title: "Powered by Traent.",
-      prose1: "Traent Hub is born within the orbit of Traent: a company built around technology, infrastructure and long-term innovation. This isn't a generic coworking — it's an ecosystem designed for those who want to think bigger and build with substance.",
-      prose2: "Proximity to Traent means access to a real tech world. It means conversations with those building next-gen digital infrastructure, not slide decks.",
-      card: {
-        label: "Company",
-        name: "Traent",
-        desc: "Technology. Transparency. Digital infrastructure.",
-        cta: "Discover Traent"
-      }
     },
     location: {
       label: "Contact",
@@ -262,10 +236,6 @@ export default function App() {
               {t.nav.space}
               <span className="absolute -bottom-1 left-0 w-full h-[1.5px] bg-pop scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
             </a>
-            <a href="#traent" className="text-[10px] tracking-[0.15em] uppercase font-medium text-warm-500 hover:text-ink transition-colors relative group">
-              {t.nav.traent}
-              <span className="absolute -bottom-1 left-0 w-full h-[1.5px] bg-pop scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-            </a>
             <a href="#contact" className="text-[10px] tracking-[0.15em] uppercase font-medium text-warm-500 hover:text-ink transition-colors relative group">
               {t.nav.contact}
               <span className="absolute -bottom-1 left-0 w-full h-[1.5px] bg-pop scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
@@ -299,7 +269,6 @@ export default function App() {
             <a href="#about" onClick={() => setIsMenuOpen(false)} className="text-2xl font-display">{t.nav.about}</a>
             <a href="#community" onClick={() => setIsMenuOpen(false)} className="text-2xl font-display">{t.nav.community}</a>
             <a href="#space" onClick={() => setIsMenuOpen(false)} className="text-2xl font-display">{t.nav.space}</a>
-            <a href="#traent" onClick={() => setIsMenuOpen(false)} className="text-2xl font-display">{t.nav.traent}</a>
             <a href="#contact" onClick={() => setIsMenuOpen(false)} className="text-2xl font-display">{t.nav.contact}</a>
             <button 
               onClick={() => { toggleLang(); setIsMenuOpen(false); }}
@@ -602,9 +571,9 @@ export default function App() {
           className="font-display text-[clamp(2rem,4.5vw,3.8rem)] leading-[1.3] max-w-[850px] mx-auto mb-10"
         >
           {lang === "it" ? (
-            <>Non cerchiamo <span className="line-through text-warm-300">spazi silenziosi</span>.<br />Cerchiamo <span className="italic font-bold text-pop">persone rumorose</span> —<br />che costruiscono, discutono,<br />e fanno accadere le cose.</>
+            <>Non cerchiamo <span className="line-through text-warm-300">spazi silenziosi</span>.<br />Cerchiamo <span className="italic font-bold text-pop">persone rumorose</span><br />che costruiscono, discutono,<br />e fanno accadere le cose.</>
           ) : (
-            <>We don't look for <span className="line-through text-warm-300">quiet spaces</span>.<br />We look for <span className="italic font-bold text-pop">loud people</span> —<br />who build, debate,<br />and make things happen.</>
+            <>We don't look for <span className="line-through text-warm-300">quiet spaces</span>.<br />We look for <span className="italic font-bold text-pop">loud people</span><br />who build, debate,<br />and make things happen.</>
           )}
         </motion.div>
         
@@ -617,56 +586,6 @@ export default function App() {
         >
           {t.manifesto.note}
         </motion.p>
-      </section>
-
-      <hr className="border-black/5" />
-
-      {/* Traent Section */}
-      <section id="traent" className="py-28 px-6 md:px-12 max-w-7xl mx-auto">
-        <div className="flex items-center gap-2.5 mb-6">
-          <div className="w-1.5 h-1.5 rounded-full bg-pop" />
-          <span className="font-mono text-[9px] tracking-[0.22em] uppercase text-warm-400 font-medium">{t.traent.label}</span>
-        </div>
-
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="font-display text-[clamp(2.2rem,5vw,4rem)] leading-[1.08] tracking-tight max-w-[750px] mb-12"
-        >
-          Powered by<br /><span className="italic font-bold">Traent</span><span className="text-pop">.</span>
-        </motion.h2>
-
-        <div className="max-w-3xl">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-lg leading-relaxed text-warm-500 font-light space-y-8"
-          >
-            <div className="space-y-5">
-              <p>{t.traent.prose1.split('<strong>').map((part, i) => i === 0 ? part : <span key={i}><strong className="text-ink font-semibold">{part.split('</strong>')[0]}</strong>{part.split('</strong>')[1]}</span>)}</p>
-              <p>{t.traent.prose2.split('<strong>').map((part, i) => i === 0 ? part : <span key={i}><strong className="text-ink font-semibold">{part.split('</strong>')[0]}</strong>{part.split('</strong>')[1]}</span>)}</p>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
-              <a 
-                href="https://traent.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-ink text-white text-[11px] font-bold tracking-[0.1em] uppercase rounded-full hover:bg-pop transition-all duration-300 shadow-lg"
-              >
-                {t.traent.card.cta}
-                <ExternalLink size={14} />
-              </a>
-            </motion.div>
-          </motion.div>
-        </div>
       </section>
 
       {/* Location Section */}
@@ -713,9 +632,9 @@ export default function App() {
       <footer className="border-t border-black/5 pt-20 pb-10 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-wrap justify-between items-start gap-12 mb-20">
-            <div className="space-y-2">
+            <div className="space-y-0">
               <Logo />
-              <p className="text-xs text-warm-400 font-light pl-[42px]">{t.footer.brand}</p>
+              <p className="text-xs text-warm-400 font-light pl-[42px] -mt-1">{t.footer.brand}</p>
             </div>
             
             <div className="flex gap-12 md:gap-20">
