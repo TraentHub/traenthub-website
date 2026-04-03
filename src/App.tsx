@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
   ArrowRight, 
@@ -15,6 +15,15 @@ import {
 import { Logo } from "./components/Logo";
 
 type Language = "it" | "en";
+
+const SPACE_SLIDE_PATHS = [
+  "/spazio/01-piazza.png",
+  "/spazio/02-open-space.png",
+  "/spazio/03-meeting.png",
+  "/spazio/04-presentazioni.png",
+  "/spazio/05-stanza-storica.png",
+  "/spazio/06-sala-principale.png",
+] as const;
 
 const translations = {
   it: {
@@ -63,6 +72,14 @@ const translations = {
     space: {
       label: "Lo spazio",
       title: "Progettato per chi costruisce.",
+      sliderLabels: [
+        "Piazza",
+        "Open space",
+        "Sala meeting",
+        "Presentazioni",
+        "Stanza storica",
+        "Sala principale",
+      ],
       items: [
         { title: "Postazioni dedicate", desc: "Il tuo spazio fisso. La tua routine. La tua community a portata di mano, ogni giorno." },
         { title: "Aree meeting", desc: "Brainstorming, pitch, call importanti. Accesso fluido, zero burocrazia." },
@@ -141,6 +158,14 @@ const translations = {
     space: {
       label: "The Space",
       title: "Designed for builders.",
+      sliderLabels: [
+        "The square",
+        "Open workspace",
+        "Meeting room",
+        "Presentations",
+        "Historic room",
+        "Main hall",
+      ],
       items: [
         { title: "Dedicated desks", desc: "Your fixed spot. Your routine. Your community within reach, every day." },
         { title: "Meeting areas", desc: "Brainstorming, pitches, key calls. Fluid access, zero bureaucracy." },
@@ -182,18 +207,19 @@ export default function App() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [currentSpaceImage, setCurrentSpaceImage] = useState(0);
 
-  const spaceSlides = [
-    { url: "https://picsum.photos/seed/modern-office-space/1000/800", label: "Open Space" },
-    { url: "https://picsum.photos/seed/corporate-meeting-room/1000/800", label: "Stanza Meeting" },
-    { url: "https://picsum.photos/seed/luxury-lounge-area/1000/800", label: "Zona Lounge" },
-    { url: "https://picsum.photos/seed/industrial-cafe-bar/1000/800", label: "Area Bar" },
-    { url: "https://picsum.photos/seed/rooftop-terrace-view/1000/800", label: "Terrazza" },
-  ];
+  const t = translations[lang];
+
+  const spaceSlides = useMemo(
+    () =>
+      SPACE_SLIDE_PATHS.map((url, i) => ({
+        url,
+        label: t.space.sliderLabels[i],
+      })),
+    [t]
+  );
 
   const nextSpaceImage = () => setCurrentSpaceImage((prev) => (prev + 1) % spaceSlides.length);
   const prevSpaceImage = () => setCurrentSpaceImage((prev) => (prev - 1 + spaceSlides.length) % spaceSlides.length);
-
-  const t = translations[lang];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -491,8 +517,9 @@ export default function App() {
               <motion.img
                 key={currentSpaceImage}
                 src={spaceSlides[currentSpaceImage].url}
+                alt={spaceSlides[currentSpaceImage].label}
                 initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 0.75, x: 0 }}
+                animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 drag="x"
