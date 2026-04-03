@@ -23,7 +23,7 @@ const translations = {
       community: "Community",
       space: "Lo spazio",
       traent: "Traent",
-      join: "Entra",
+      contact: "Contatti",
     },
     hero: {
       eyebrow: "Pisa, Italia",
@@ -53,7 +53,7 @@ const translations = {
     },
     community: {
       label: "La community",
-      title: "Per chi non si accontenta del mediocre.",
+      title: "Per chi cerca stimoli e nuove prospettive.",
       personas: [
         { idx: "01", title: "Founder", icon: "◆", desc: "Stai costruendo qualcosa di nuovo. Qui trovi co-founder, advisor e le prime conversazioni che contano davvero." },
         { idx: "02", title: "Dev & tech", icon: "⚡", desc: "Professionisti che vogliono lavorare circondati da eccellenza. Codice, architetture, confronto reale." },
@@ -74,7 +74,7 @@ const translations = {
     manifesto: {
       label: "Manifesto",
       line: "Non cerchiamo spazi silenziosi. Cerchiamo persone rumorose — che costruiscono, discutono, e fanno accadere le cose.",
-      note: "Se cerchi un posto tranquillo dove stare per conto tuo, probabilmente non fa per te. Se cerchi le persone giuste, sei nel posto giusto."
+      note: "Traent Hub è pensato per chi crede che le idee migliori nascano dal confronto. Se cerchi un ambiente dinamico e persone con cui scambiare visioni, sei nel posto giusto."
     },
     traent: {
       label: "L'orbita",
@@ -85,13 +85,14 @@ const translations = {
         label: "Company",
         name: "Traent",
         desc: "Tecnologia. Trasparenza. Infrastruttura digitale.",
-        cta: "Scopri Traent →"
+        cta: "Scopri Traent"
       }
     },
     location: {
-      label: "Dove siamo",
-      title: "Borgo Stretto 3, Pisa",
-      desc: "Nel cuore del centro storico. A due passi dalla Normale, dall'università e dalla stazione. Dove la città incontra chi la vuole cambiare."
+      label: "Contatti",
+      title: "Vieni a trovarci.",
+      desc: "Ci trovi nel cuore di Pisa, in Borgo Stretto 3. Per qualsiasi informazione o per fissare una visita, scrivici.",
+      email: "hub@traent.com"
     },
     cta: {
       title: "Pronto a entrare?",
@@ -113,7 +114,7 @@ const translations = {
       community: "Community",
       space: "The Space",
       traent: "Traent",
-      join: "Join",
+      contact: "Contact",
     },
     hero: {
       eyebrow: "Pisa, Italy",
@@ -143,7 +144,7 @@ const translations = {
     },
     community: {
       label: "Community",
-      title: "For those who refuse the mediocre.",
+      title: "For those seeking inspiration and new perspectives.",
       personas: [
         { idx: "01", title: "Founders", icon: "◆", desc: "You're building something new. Here you find co-founders, advisors and the early conversations that truly matter." },
         { idx: "02", title: "Dev & tech", icon: "⚡", desc: "Professionals who want to work surrounded by excellence. Code, architectures, real exchange." },
@@ -164,7 +165,7 @@ const translations = {
     manifesto: {
       label: "Manifesto",
       line: "We don't look for quiet spaces. We look for loud people — who build, debate, and make things happen.",
-      note: "If you're looking for a quiet place to keep to yourself, this probably isn't for you. If you're looking for the right people, you're in the right place."
+      note: "Traent Hub is designed for those who believe the best ideas come from exchange. If you're looking for a dynamic environment and people to share visions with, you're in the right place."
     },
     traent: {
       label: "The Orbit",
@@ -175,13 +176,14 @@ const translations = {
         label: "Company",
         name: "Traent",
         desc: "Technology. Transparency. Digital infrastructure.",
-        cta: "Discover Traent →"
+        cta: "Discover Traent"
       }
     },
     location: {
-      label: "Location",
-      title: "Borgo Stretto 3, Pisa",
-      desc: "In the historic center. Steps from the Normale, the university and the station. Where the city meets those who want to change it."
+      label: "Contact",
+      title: "Come visit us.",
+      desc: "You can find us in the heart of Pisa, at Borgo Stretto 3. For any information or to schedule a visit, write to us.",
+      email: "hub@traent.com"
     },
     cta: {
       title: "Ready to join?",
@@ -264,6 +266,10 @@ export default function App() {
               {t.nav.traent}
               <span className="absolute -bottom-1 left-0 w-full h-[1.5px] bg-pop scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
             </a>
+            <a href="#contact" className="text-[10px] tracking-[0.15em] uppercase font-medium text-warm-500 hover:text-ink transition-colors relative group">
+              {t.nav.contact}
+              <span className="absolute -bottom-1 left-0 w-full h-[1.5px] bg-pop scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+            </a>
             <button 
               onClick={toggleLang}
               className="font-mono text-[9px] tracking-wider px-3 py-1 border-1.5 border-ink rounded-full hover:bg-ink hover:text-paper transition-all"
@@ -272,10 +278,6 @@ export default function App() {
             </button>
           </div>
           
-          <a href="#contact" className="hidden md:block text-[10px] tracking-wider uppercase font-semibold px-5 py-2.5 bg-ink text-paper rounded-full hover:bg-pop hover:-translate-y-0.5 transition-all">
-            {t.nav.join}
-          </a>
-
           <button 
             className="md:hidden p-2 text-ink"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -298,6 +300,7 @@ export default function App() {
             <a href="#community" onClick={() => setIsMenuOpen(false)} className="text-2xl font-display">{t.nav.community}</a>
             <a href="#space" onClick={() => setIsMenuOpen(false)} className="text-2xl font-display">{t.nav.space}</a>
             <a href="#traent" onClick={() => setIsMenuOpen(false)} className="text-2xl font-display">{t.nav.traent}</a>
+            <a href="#contact" onClick={() => setIsMenuOpen(false)} className="text-2xl font-display">{t.nav.contact}</a>
             <button 
               onClick={() => { toggleLang(); setIsMenuOpen(false); }}
               className="font-mono text-xs border-1.5 border-ink px-4 py-2 rounded-full"
@@ -356,12 +359,9 @@ export default function App() {
             transition={{ delay: 0.3 }}
             className="flex flex-wrap items-center gap-4"
           >
-            <a href="#contact" className="group inline-flex items-center gap-2.5 px-8 py-4 bg-ink text-paper text-[11px] font-semibold tracking-wider uppercase rounded-full hover:bg-pop hover:-translate-y-0.5 transition-all shadow-xl shadow-pop/10">
-              {t.hero.cta}
-              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-            </a>
-            <a href="#about" className="px-4 py-4 text-warm-500 hover:text-ink text-[11px] font-medium tracking-wider transition-colors">
+            <a href="#about" className="group inline-flex items-center gap-2.5 px-10 py-5 bg-ink text-paper text-[12px] font-semibold tracking-wider uppercase rounded-full hover:bg-pop hover:-translate-y-0.5 transition-all shadow-2xl shadow-pop/20">
               {t.hero.more}
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </a>
           </motion.div>
 
@@ -467,11 +467,7 @@ export default function App() {
             viewport={{ once: true }}
             className="font-display text-[clamp(2.2rem,5vw,4rem)] leading-[1.08] tracking-tight max-w-[750px] mb-16"
           >
-            {lang === "it" ? (
-              <>Per chi non si accontenta<br />del <span className="italic font-bold text-pop">mediocre</span>.</>
-            ) : (
-              <>For those who refuse<br />the <span className="italic font-bold text-pop">mediocre</span>.</>
-            )}
+            {t.community.title}
           </motion.h2>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 border border-white/10 rounded-lg overflow-hidden">
@@ -599,7 +595,7 @@ export default function App() {
           <span className="font-mono text-[9px] tracking-[0.22em] uppercase text-warm-400 font-medium">{t.manifesto.label}</span>
         </div>
         
-        <motion.p 
+        <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -610,7 +606,7 @@ export default function App() {
           ) : (
             <>We don't look for <span className="line-through text-warm-300">quiet spaces</span>.<br />We look for <span className="italic font-bold text-pop">loud people</span> —<br />who build, debate,<br />and make things happen.</>
           )}
-        </motion.p>
+        </motion.div>
         
         <motion.p 
           initial={{ opacity: 0 }}
@@ -641,47 +637,34 @@ export default function App() {
           Powered by<br /><span className="italic font-bold">Traent</span><span className="text-pop">.</span>
         </motion.h2>
 
-        <div className="grid md:grid-cols-[5fr_3fr] gap-12 md:gap-20 items-start">
+        <div className="max-w-3xl">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-lg leading-relaxed text-warm-500 font-light space-y-5"
+            className="text-lg leading-relaxed text-warm-500 font-light space-y-8"
           >
-            <p>{t.traent.prose1.split('<strong>').map((part, i) => i === 0 ? part : <span key={i}><strong className="text-ink font-semibold">{part.split('</strong>')[0]}</strong>{part.split('</strong>')[1]}</span>)}</p>
-            <p>{t.traent.prose2.split('<strong>').map((part, i) => i === 0 ? part : <span key={i}><strong className="text-ink font-semibold">{part.split('</strong>')[0]}</strong>{part.split('</strong>')[1]}</span>)}</p>
-          </motion.div>
+            <div className="space-y-5">
+              <p>{t.traent.prose1.split('<strong>').map((part, i) => i === 0 ? part : <span key={i}><strong className="text-ink font-semibold">{part.split('</strong>')[0]}</strong>{part.split('</strong>')[1]}</span>)}</p>
+              <p>{t.traent.prose2.split('<strong>').map((part, i) => i === 0 ? part : <span key={i}><strong className="text-ink font-semibold">{part.split('</strong>')[0]}</strong>{part.split('</strong>')[1]}</span>)}</p>
+            </div>
 
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="bg-ink text-paper p-12 rounded-2xl relative overflow-hidden group border border-white/5 shadow-2xl"
-          >
-            {/* Background Accents */}
-            <div className="absolute -top-[20%] -right-[10%] w-64 h-64 bg-pop/10 blur-[100px] rounded-full" />
-            
-            <div className="relative z-10">
-              <div className="mb-8">
-                <div className="font-display text-5xl font-bold mb-4 tracking-tight">
-                  Tra<span className="text-pop">ent</span>
-                </div>
-                <p className="text-base text-white/60 leading-relaxed font-light max-w-md">
-                  {t.traent.card.desc}
-                </p>
-              </div>
-              
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
               <a 
                 href="https://traent.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-pop text-white text-[11px] font-bold tracking-[0.1em] uppercase rounded-full hover:bg-white hover:text-ink transition-all duration-300 shadow-lg"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-ink text-white text-[11px] font-bold tracking-[0.1em] uppercase rounded-full hover:bg-pop transition-all duration-300 shadow-lg"
               >
                 {t.traent.card.cta}
                 <ExternalLink size={14} />
               </a>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -689,62 +672,42 @@ export default function App() {
       {/* Location Section */}
       <div id="contact" className="bg-cream border-y border-black/5">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="grid md:grid-cols-2 min-h-[420px]">
-            <div className="py-20 md:pr-20 flex flex-col justify-center">
+          <div className="grid md:grid-cols-2 min-h-[500px]">
+            <div className="py-24 md:pr-20 flex flex-col justify-center">
               <div className="flex items-center gap-2.5 mb-6">
                 <div className="w-1.5 h-1.5 rounded-full bg-pop" />
                 <span className="font-mono text-[9px] tracking-[0.22em] uppercase text-warm-400 font-medium">{t.location.label}</span>
               </div>
-              <h3 className="font-display text-4xl md:text-5xl font-bold mb-4">{t.location.title}</h3>
-              <p className="text-base text-warm-500 leading-relaxed font-light max-w-md">{t.location.desc}</p>
-              <div className="font-mono text-xs tracking-widest text-pop mt-8 font-medium">43.7167° N, 10.4014° E</div>
-            </div>
-            <div className="border-l border-black/5 flex items-center justify-center relative min-h-[300px] md:min-h-full overflow-hidden">
-              <div className="space-grid absolute inset-0 opacity-50" />
-              <div className="relative w-16 h-16 flex items-center justify-center">
-                <div className="absolute w-16 h-16 bg-pop/10 rounded-full animate-ping" />
-                <div className="w-4 h-4 bg-pop rounded-full ring-4 ring-paper shadow-lg" />
+              <h3 className="font-display text-4xl md:text-5xl font-bold mb-6">{t.location.title}</h3>
+              <p className="text-base text-warm-500 leading-relaxed font-light max-w-md mb-8">{t.location.desc}</p>
+              
+              <div className="space-y-6">
+                <div>
+                  <div className="font-mono text-[10px] tracking-widest text-warm-300 uppercase mb-2">Email</div>
+                  <a href={`mailto:${t.location.email}`} className="text-xl font-display hover:text-pop transition-colors">{t.location.email}</a>
+                </div>
+                <div>
+                  <div className="font-mono text-[10px] tracking-widest text-warm-300 uppercase mb-2">Coordinates</div>
+                  <div className="font-mono text-xs tracking-widest text-pop font-medium">43.7167° N, 10.4014° E</div>
+                </div>
               </div>
+            </div>
+            <div className="border-l border-black/5 relative min-h-[400px] md:min-h-full overflow-hidden">
+              <iframe 
+                src="https://maps.google.com/maps?q=Borgo%20Stretto%203,%20Pisa&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                width="100%" 
+                height="100%" 
+                style={{ border: 0, filter: 'grayscale(1) contrast(1.2) opacity(0.8)' }} 
+                allowFullScreen={true} 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+                className="absolute inset-0"
+              />
+              <div className="absolute inset-0 pointer-events-none border-l border-black/5" />
             </div>
           </div>
         </div>
       </div>
-
-      {/* Final CTA */}
-      <section className="py-40 px-6 md:px-12 text-center">
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="font-display text-[clamp(3rem,7vw,6rem)] font-bold leading-[0.95] tracking-tighter mb-6"
-        >
-          {lang === "it" ? (
-            <>Pronto a<br /><span className="italic text-pop">entrare</span>?</>
-          ) : (
-            <>Ready to<br /><span className="italic text-pop">join</span>?</>
-          )}
-        </motion.h2>
-        <motion.p 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-lg text-warm-400 max-w-sm mx-auto mb-10 leading-relaxed font-light"
-        >
-          {t.cta.sub}
-        </motion.p>
-        <motion.a 
-          href="mailto:hub@traent.com"
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="group inline-flex items-center gap-2.5 px-10 py-5 bg-ink text-paper text-[12px] font-semibold tracking-wider uppercase rounded-full hover:bg-pop hover:-translate-y-0.5 transition-all shadow-2xl shadow-pop/20"
-        >
-          {t.cta.btn}
-          <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-        </motion.a>
-      </section>
 
       {/* Footer */}
       <footer className="border-t border-black/5 pt-20 pb-10 px-6 md:px-12">
@@ -752,7 +715,7 @@ export default function App() {
           <div className="flex flex-wrap justify-between items-start gap-12 mb-20">
             <div className="space-y-2">
               <Logo />
-              <p className="text-xs text-warm-400 font-light">{t.footer.brand}</p>
+              <p className="text-xs text-warm-400 font-light pl-[42px]">{t.footer.brand}</p>
             </div>
             
             <div className="flex gap-12 md:gap-20">
@@ -762,6 +725,7 @@ export default function App() {
                   <a href="#about" className="text-sm text-warm-500 hover:text-ink transition-colors font-light">{t.nav.about}</a>
                   <a href="#community" className="text-sm text-warm-500 hover:text-ink transition-colors font-light">{t.nav.community}</a>
                   <a href="#space" className="text-sm text-warm-500 hover:text-ink transition-colors font-light">{t.nav.space}</a>
+                  <a href="#contact" className="text-sm text-warm-500 hover:text-ink transition-colors font-light">{t.nav.contact}</a>
                 </div>
               </div>
               <div className="space-y-4">
