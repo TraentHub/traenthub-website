@@ -516,16 +516,16 @@ export default function App() {
             </div>
 
             {/* Slider Controls */}
-            <div className="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="absolute inset-0 flex items-center justify-between px-4 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
               <button 
                 onClick={prevSpaceImage}
-                className="w-10 h-10 rounded-full bg-paper/80 backdrop-blur-sm flex items-center justify-center text-ink hover:bg-pop hover:text-paper transition-all"
+                className="w-10 h-10 rounded-full bg-paper/80 backdrop-blur-sm flex items-center justify-center text-ink hover:bg-pop hover:text-paper transition-all pointer-events-auto"
               >
                 <ChevronLeft size={20} />
               </button>
               <button 
                 onClick={nextSpaceImage}
-                className="w-10 h-10 rounded-full bg-paper/80 backdrop-blur-sm flex items-center justify-center text-ink hover:bg-pop hover:text-paper transition-all"
+                className="w-10 h-10 rounded-full bg-paper/80 backdrop-blur-sm flex items-center justify-center text-ink hover:bg-pop hover:text-paper transition-all pointer-events-auto"
               >
                 <ChevronRight size={20} />
               </button>
