@@ -495,7 +495,16 @@ export default function App() {
                 animate={{ opacity: 0.75, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="absolute inset-0 w-full h-full object-cover"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                onDragEnd={(_, info) => {
+                  if (info.offset.x > 50) {
+                    prevSpaceImage();
+                  } else if (info.offset.x < -50) {
+                    nextSpaceImage();
+                  }
+                }}
+                className="absolute inset-0 w-full h-full object-cover cursor-grab active:cursor-grabbing"
                 referrerPolicy="no-referrer"
               />
             </AnimatePresence>
