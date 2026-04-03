@@ -31,7 +31,7 @@ const translations = {
       title3: "si incontra",
       sub: "Non un coworking. Non un incubatore. Un luogo dove founder, dev, ricercatori e menti ambiziose costruiscono insieme — nel cuore di Pisa.",
       cta: "Entra nell'hub",
-      more: "Scopri di più ↓",
+      more: "Scopri di più",
       stats: {
         talents: "Talenti residenti",
         ideas: "Idee in circolo",
@@ -109,7 +109,7 @@ const translations = {
       title3: "converges",
       sub: "Not a coworking. Not an incubator. A place where founders, devs, researchers and ambitious minds build together — in the heart of Pisa.",
       cta: "Join the hub",
-      more: "Learn more ↓",
+      more: "Learn more",
       stats: {
         talents: "Resident talents",
         ideas: "Ideas in motion",
