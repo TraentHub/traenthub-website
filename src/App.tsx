@@ -48,11 +48,11 @@ const translations = {
       prose1: "Traent Hub seleziona talenti eccezionali, tech builder e domain innovator, e li riunisce in uno spazio gratuito nel cuore di Pisa. Qui la contaminazione tra discipline genera nuove idee, connessioni e progetti reali. Il nostro obiettivo è creare il substrato giusto per far crescere i talenti e le loro idee.",
       prose2: "",
       cards: [
-        { title: "Merito", desc: "Qui conta chi sei e cosa fai. Standard alti, selezione rigorosa: essere un Resident di Traent Hub deve significare qualcosa." },
+        { title: "Merito", desc: "Qui conta solo chi sei e cosa fai." },
         { title: "Contaminazione", desc: "La mescolanza di discipline, background e visioni è il motore reale dell'innovazione." },
-        { title: "Builder Culture", desc: "Si valorizza l'attitudine all'innovazione, al confronto e alla crescita. Non chi appare, ma chi costruisce." },
-        { title: "Comunità", desc: "Connessioni che durano oltre la residency e trasformano le prospettive dei talenti pisani." },
-        { title: "Gratuità", desc: "Non si paga, si viene scelti. Zero canoni, zero equity. La tua IP resta tua al 100%." }
+        { title: "Builder Culture", desc: "Si valorizza l'attitudine all'innovazione, al confronto e alla crescita." },
+        { title: "Comunità", desc: "Connessioni che durano oltre la residency e trasformano le prospettive dei Residents." },
+        { title: "Indipendenza Creativa", desc: "Nessun costo, nessuna cessione di proprietà intellettuale." }
       ]
     },
     community: {
@@ -129,11 +129,11 @@ const translations = {
       prose1: "Traent Hub selects exceptional talents, tech builders and domain innovators, and brings them together in a free space in the heart of Pisa. Here, cross-disciplinary contamination generates new ideas, connections and real projects. Our goal is to create the right substrate for talents and their ideas to grow.",
       prose2: "",
       cards: [
-        { title: "Merit", desc: "What matters is who you are and what you do. High standards, rigorous selection: being a Traent Hub Resident must mean something." },
+        { title: "Merit", desc: "What counts is only who you are and what you do." },
         { title: "Contamination", desc: "The mix of disciplines, backgrounds and visions is the real engine of innovation." },
-        { title: "Builder Culture", desc: "We value the attitude to innovate, confront and grow. Not who appears, but who builds." },
-        { title: "Community", desc: "Connections that last beyond residency and transform the perspectives of Pisan talents." },
-        { title: "Free", desc: "You don't pay, you get chosen. Zero fees, zero equity. Your IP stays 100% yours." }
+        { title: "Builder Culture", desc: "We value the attitude to innovate, confront and grow." },
+        { title: "Community", desc: "Connections that last beyond residency and transform the perspectives of our Residents." },
+        { title: "Creative Independence", desc: "No cost, no transfer of intellectual property." }
       ]
     },
     community: {
@@ -301,7 +301,7 @@ export default function App() {
             transition={{ delay: 0.1 }}
             className="font-display text-[clamp(3.2rem,8.5vw,7.5rem)] leading-[1.1] tracking-tighter mb-8 pt-4"
           >
-            {t.hero.title1}<br />
+            {t.hero.title1}{" "}
             <span className="italic font-bold text-pop">{t.hero.title2}</span>
             <span className="text-ink">.</span>
           </motion.h1>
