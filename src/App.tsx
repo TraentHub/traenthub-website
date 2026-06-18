@@ -1,10 +1,9 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   ArrowRight,
   Menu,
   X,
-  Globe,
   ChevronLeft,
   ChevronRight
 } from "lucide-react";
@@ -99,6 +98,37 @@ const translations = {
         social: "Social",
         legal: "Legal"
       }
+    },
+    legal: {
+      close: "Chiudi",
+      updated: "Ultimo aggiornamento: giugno 2026",
+      privacy: {
+        label: "Privacy",
+        title: "Informativa sulla privacy",
+        intro: "La presente informativa descrive come Traent Hub tratta i dati personali degli utenti del sito.",
+        sections: [
+          { h: "Titolare del trattamento", p: "Titolare del trattamento è Traent Hub, con sede in Via Borgo Stretto 3, Pisa. Per qualsiasi richiesta puoi scrivere a contact@traenthub.com." },
+          { h: "Dati che raccogliamo", p: "Il sito non richiede registrazione né raccoglie dati personali tramite form. L'unico canale di comunicazione è l'email: i dati che ci invii volontariamente vengono utilizzati esclusivamente per rispondere alla tua richiesta." },
+          { h: "Dati di navigazione", p: "I sistemi informatici possono acquisire, durante il normale funzionamento, dati la cui trasmissione è implicita nell'uso dei protocolli di rete (ad esempio indirizzi IP). Sono utilizzati soltanto per fini statistici anonimi e di sicurezza del sito." },
+          { h: "Mappa di Google Maps", p: "La pagina Contatti incorpora una mappa Google Maps. In tal caso Google può impostare cookie e trattare dati (come l'indirizzo IP) per fornire il servizio. Per maggiori informazioni consulta l'informativa di Google." },
+          { h: "Cookie", p: "Per i cookie utilizzati si rinvia alla Cookie Policy." },
+          { h: "Base giuridica e finalità", p: "Il trattamento si basa sul tuo consenso e sul legittimo interesse a rispondere alle comunicazioni ricevute. Le finalità sono esclusivamente legate alla gestione delle richieste e al funzionamento del sito." },
+          { h: "Condivisione e conservazione", p: "I tuoi dati non vengono venduti né ceduti a terzi, salvo i fornitori tecnici necessari (come Google per la mappa). Vengono conservati per il tempo strettamente necessario alla finalità per cui sono stati raccolti." },
+          { h: "I tuoi diritti", p: "Hai diritto ad accedere ai tuoi dati, rettificarli, cancellarli, limitarne il trattamento, opporti e richiederne la portabilità, nonché a revocare il consenso. Per esercitare i tuoi diritti scrivi a contact@traenthub.com. Hai inoltre diritto di proporre reclamo al Garante per la protezione dei dati personali (www.garanteprivacy.org)." }
+        ]
+      },
+      cookies: {
+        label: "Cookie",
+        title: "Cookie Policy",
+        intro: "Questa policy descrive come il sito utilizza i cookie.",
+        sections: [
+          { h: "Cosa sono i cookie", p: "I cookie sono piccoli file di testo che i siti visitati salvano sul tuo dispositivo per memorizzare informazioni utili al funzionamento del servizio." },
+          { h: "Cookie tecnici", p: "Il sito utilizza esclusivamente cookie tecnici necessari al corretto funzionamento, che non richiedono consenso ai sensi della normativa vigente." },
+          { h: "Cookie di terze parti", p: "L'incorporamento della mappa Google Maps può comportare l'installazione di cookie da parte di Google. La gestione di tali cookie è regolata dall'informativa di Google." },
+          { h: "Cookie di profilazione", p: "Il sito non utilizza cookie di profilazione né di marketing." },
+          { h: "Gestione dei cookie", p: "Puoi gestire o disabilitare i cookie in qualsiasi momento tramite le impostazioni del tuo browser. La disabilitazione potrebbe limitare alcune funzionalità, come la visualizzazione della mappa." }
+        ]
+      }
     }
   },
   en: {
@@ -180,6 +210,37 @@ const translations = {
         social: "Social",
         legal: "Legal"
       }
+    },
+    legal: {
+      close: "Close",
+      updated: "Last updated: June 2026",
+      privacy: {
+        label: "Privacy",
+        title: "Privacy Policy",
+        intro: "This policy describes how Traent Hub handles the personal data of site users.",
+        sections: [
+          { h: "Data controller", p: "The data controller is Traent Hub, based at Via Borgo Stretto 3, Pisa. For any request, write to contact@traenthub.com." },
+          { h: "Data we collect", p: "The site does not require registration and does not collect personal data through forms. The only communication channel is email: any data you send us voluntarily is used solely to respond to your request." },
+          { h: "Navigation data", p: "Computer systems may, during normal operation, acquire data whose transmission is implicit in the use of network protocols (such as IP addresses). These are used only for anonymous statistical and security purposes." },
+          { h: "Google Maps", p: "The Contact page embeds a Google Maps map. In doing so, Google may set cookies and process data (such as your IP address) to provide the service. For more information, see Google's policy." },
+          { h: "Cookies", p: "For the cookies used, please refer to the Cookie Policy." },
+          { h: "Legal basis and purposes", p: "Processing is based on your consent and on the legitimate interest in responding to communications received. The purposes are solely related to handling requests and operating the site." },
+          { h: "Sharing and retention", p: "Your data is not sold or transferred to third parties, except for the technical providers required (such as Google for the map). It is retained only for as long as necessary for the purpose for which it was collected." },
+          { h: "Your rights", p: "You have the right to access your data, rectify it, erase it, restrict its processing, object to it and request its portability, as well as to withdraw consent. To exercise your rights, write to contact@traenthub.com. You also have the right to lodge a complaint with the supervisory authority." }
+        ]
+      },
+      cookies: {
+        label: "Cookies",
+        title: "Cookie Policy",
+        intro: "This policy describes how the site uses cookies.",
+        sections: [
+          { h: "What cookies are", p: "Cookies are small text files that visited websites save on your device to store information useful for the service." },
+          { h: "Technical cookies", p: "The site uses only technical cookies necessary for correct operation, which do not require consent under current regulations." },
+          { h: "Third-party cookies", p: "Embedding the Google Maps map may result in cookies being set by Google. The management of these cookies is governed by Google's policy." },
+          { h: "Profiling cookies", p: "The site does not use profiling or marketing cookies." },
+          { h: "Managing cookies", p: "You can manage or disable cookies at any time through your browser settings. Disabling them may limit some features, such as viewing the map." }
+        ]
+      }
     }
   }
 };
@@ -190,6 +251,7 @@ export default function App() {
   const [isNavHidden, setIsNavHidden] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [currentSpaceImage, setCurrentSpaceImage] = useState(0);
+  const [modalContent, setModalContent] = useState<"privacy" | "cookies" | null>(null);
 
   const t = translations[lang];
 
@@ -210,6 +272,23 @@ export default function App() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
+
+  // Close the legal modal on Escape
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setModalContent(null);
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, []);
+
+  // Lock body scroll while the modal is open
+  useEffect(() => {
+    document.body.style.overflow = modalContent ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [modalContent]);
 
   const toggleLang = () => setLang(prev => prev === "it" ? "en" : "it");
 
@@ -675,8 +754,8 @@ export default function App() {
               <div className="space-y-4">
                 <h5 className="font-mono text-[9px] tracking-[0.2em] uppercase text-warm-300 font-medium">{t.footer.cols.legal}</h5>
                 <div className="flex flex-col gap-2">
-                  <a href="#" className="text-sm text-warm-500 hover:text-ink transition-colors font-light">Privacy</a>
-                  <a href="#" className="text-sm text-warm-500 hover:text-ink transition-colors font-light">Cookie</a>
+                  <button onClick={() => setModalContent("privacy")} className="text-sm text-warm-500 hover:text-ink transition-colors font-light text-left">Privacy</button>
+                  <button onClick={() => setModalContent("cookies")} className="text-sm text-warm-500 hover:text-ink transition-colors font-light text-left">Cookie</button>
                 </div>
               </div>
             </div>
@@ -692,6 +771,68 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* Legal Modal (Privacy / Cookies) */}
+      <AnimatePresence>
+        {modalContent && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setModalContent(null)}
+            className="fixed inset-0 z-[200] bg-ink/50 backdrop-blur-sm flex items-start md:items-center justify-center p-4 md:p-8 overflow-y-auto"
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 30, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 30, scale: 0.98 }}
+              transition={{ type: "spring", damping: 26, stiffness: 280 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative bg-paper rounded-xl border border-black/10 shadow-2xl w-full max-w-3xl my-4 md:my-8 max-h-[90vh] flex flex-col"
+            >
+              {/* Header */}
+              <div className="sticky top-0 z-10 bg-paper/95 backdrop-blur-md border-b border-black/5 px-6 md:px-12 py-6 flex items-start justify-between gap-6 rounded-t-xl">
+                <div className="flex items-start gap-3">
+                  <div className="w-2.5 h-2.5 rounded-full bg-pop shrink-0 mt-[10px]" />
+                  <div>
+                    <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-warm-400 font-medium block mb-1">
+                      {t.legal[modalContent].label}
+                    </span>
+                    <h3 className="font-display text-3xl md:text-4xl font-bold leading-tight tracking-tight">
+                      {t.legal[modalContent].title}
+                    </h3>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setModalContent(null)}
+                  aria-label={t.legal.close}
+                  className="shrink-0 w-10 h-10 rounded-full border border-black/10 flex items-center justify-center text-ink hover:bg-ink hover:text-paper transition-all"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* Body */}
+              <div className="px-6 md:px-12 py-8 overflow-y-auto">
+                <p className="text-base text-warm-500 leading-relaxed font-light mb-8">
+                  {t.legal[modalContent].intro}
+                </p>
+                <div className="space-y-7">
+                  {t.legal[modalContent].sections.map((section, idx) => (
+                    <div key={idx}>
+                      <h4 className="font-display text-xl font-bold mb-2 tracking-tight">{section.h}</h4>
+                      <p className="text-[15px] text-warm-500 leading-relaxed font-light">{section.p}</p>
+                    </div>
+                  ))}
+                </div>
+                <p className="font-mono text-[10px] tracking-widest uppercase text-warm-300 mt-10 pt-6 border-t border-black/5">
+                  {t.legal.updated}
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
