@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   ArrowRight,
+  ArrowUpRight,
   Menu,
   X,
   ChevronLeft,
@@ -84,7 +85,8 @@ const translations = {
       label: "Contatti",
       title: "Vieni a trovarci.",
       desc: "Ci trovi nel cuore di Pisa, in Via Borgo Stretto 3. La residency è trimestrale e rinnovabile. Per candidarti o per informazioni, scrivici.",
-      email: "contact@traenthub.com"
+      email: "contact@traenthub.com",
+      mapBtn: "Apri in Google Maps"
     },
     cta: {
       title: "Vuoi far parte della prossima cohort?",
@@ -110,10 +112,10 @@ const translations = {
           { h: "Titolare del trattamento", p: "Titolare del trattamento è Traent Hub, con sede in Via Borgo Stretto 3, Pisa. Per qualsiasi richiesta puoi scrivere a contact@traenthub.com." },
           { h: "Dati che raccogliamo", p: "Il sito non richiede registrazione né raccoglie dati personali tramite form. L'unico canale di comunicazione è l'email: i dati che ci invii volontariamente vengono utilizzati esclusivamente per rispondere alla tua richiesta." },
           { h: "Dati di navigazione", p: "I sistemi informatici possono acquisire, durante il normale funzionamento, dati la cui trasmissione è implicita nell'uso dei protocolli di rete (ad esempio indirizzi IP). Sono utilizzati soltanto per fini statistici anonimi e di sicurezza del sito." },
-          { h: "Mappa di Google Maps", p: "La pagina Contatti incorpora una mappa Google Maps. In tal caso Google può impostare cookie e trattare dati (come l'indirizzo IP) per fornire il servizio. Per maggiori informazioni consulta l'informativa di Google." },
+          { h: "Mappa", p: "La pagina Contatti mostra una mappa statica basata sui dati di OpenStreetMap (© OpenStreetMap contributors, licenza ODbL), ospitata direttamente sul sito: nessun servizio esterno viene caricato e nessun cookie viene impostato. Il link per aprire Google Maps viene caricato solo su tua esplicita richiesta, in una nuova scheda." },
           { h: "Cookie", p: "Per i cookie utilizzati si rinvia alla Cookie Policy." },
           { h: "Base giuridica e finalità", p: "Il trattamento si basa sul tuo consenso e sul legittimo interesse a rispondere alle comunicazioni ricevute. Le finalità sono esclusivamente legate alla gestione delle richieste e al funzionamento del sito." },
-          { h: "Condivisione e conservazione", p: "I tuoi dati non vengono venduti né ceduti a terzi, salvo i fornitori tecnici necessari (come Google per la mappa). Vengono conservati per il tempo strettamente necessario alla finalità per cui sono stati raccolti." },
+          { h: "Condivisione e conservazione", p: "I tuoi dati non vengono venduti né ceduti a terzi. L'unico servizio esterno utilizzato è Google Fonts per i caratteri tipografici, che non imposta cookie. I dati raccolti tramite email sono conservati per il tempo strettamente necessario alla finalità per cui sono stati raccolti." },
           { h: "I tuoi diritti", p: "Hai diritto ad accedere ai tuoi dati, rettificarli, cancellarli, limitarne il trattamento, opporti e richiederne la portabilità, nonché a revocare il consenso. Per esercitare i tuoi diritti scrivi a contact@traenthub.com. Hai inoltre diritto di proporre reclamo al Garante per la protezione dei dati personali (www.garanteprivacy.org)." }
         ]
       },
@@ -123,10 +125,9 @@ const translations = {
         intro: "Questa policy descrive come il sito utilizza i cookie.",
         sections: [
           { h: "Cosa sono i cookie", p: "I cookie sono piccoli file di testo che i siti visitati salvano sul tuo dispositivo per memorizzare informazioni utili al funzionamento del servizio." },
-          { h: "Cookie tecnici", p: "Il sito utilizza esclusivamente cookie tecnici necessari al corretto funzionamento, che non richiedono consenso ai sensi della normativa vigente." },
-          { h: "Cookie di terze parti", p: "L'incorporamento della mappa Google Maps può comportare l'installazione di cookie da parte di Google. La gestione di tali cookie è regolata dall'informativa di Google." },
-          { h: "Cookie di profilazione", p: "Il sito non utilizza cookie di profilazione né di marketing." },
-          { h: "Gestione dei cookie", p: "Puoi gestire o disabilitare i cookie in qualsiasi momento tramite le impostazioni del tuo browser. La disabilitazione potrebbe limitare alcune funzionalità, come la visualizzazione della mappa." }
+          { h: "Cookie del sito", p: "Questo sito non imposta cookie di alcun tipo: nessun cookie tecnico, analitico o di profilazione." },
+          { h: "Risorse di terze parti", p: "La mappa è un'immagine statica basata su dati OpenStreetMap, ospitata direttamente sul sito. I caratteri tipografici sono caricati da Google Fonts; tale servizio non imposta cookie." },
+          { h: "Gestione dei cookie", p: "Puoi comunque gestire o disabilitare i cookie in qualsiasi momento tramite le impostazioni del tuo browser." }
         ]
       }
     }
@@ -196,7 +197,8 @@ const translations = {
       label: "Contact",
       title: "Come visit us.",
       desc: "You can find us in the heart of Pisa, at Via Borgo Stretto 3. The residency is quarterly and renewable. To apply or for information, write to us.",
-      email: "contact@traenthub.com"
+      email: "contact@traenthub.com",
+      mapBtn: "Open in Google Maps"
     },
     cta: {
       title: "Want to join the next cohort?",
@@ -222,10 +224,10 @@ const translations = {
           { h: "Data controller", p: "The data controller is Traent Hub, based at Via Borgo Stretto 3, Pisa. For any request, write to contact@traenthub.com." },
           { h: "Data we collect", p: "The site does not require registration and does not collect personal data through forms. The only communication channel is email: any data you send us voluntarily is used solely to respond to your request." },
           { h: "Navigation data", p: "Computer systems may, during normal operation, acquire data whose transmission is implicit in the use of network protocols (such as IP addresses). These are used only for anonymous statistical and security purposes." },
-          { h: "Google Maps", p: "The Contact page embeds a Google Maps map. In doing so, Google may set cookies and process data (such as your IP address) to provide the service. For more information, see Google's policy." },
+          { h: "Map", p: "The Contact page shows a static map based on OpenStreetMap data (© OpenStreetMap contributors, ODbL license), hosted directly on the site: no external service is loaded and no cookies are set. The link to open Google Maps is loaded only at your explicit request, in a new tab." },
           { h: "Cookies", p: "For the cookies used, please refer to the Cookie Policy." },
           { h: "Legal basis and purposes", p: "Processing is based on your consent and on the legitimate interest in responding to communications received. The purposes are solely related to handling requests and operating the site." },
-          { h: "Sharing and retention", p: "Your data is not sold or transferred to third parties, except for the technical providers required (such as Google for the map). It is retained only for as long as necessary for the purpose for which it was collected." },
+          { h: "Sharing and retention", p: "Your data is not sold or transferred to third parties. The only external service used is Google Fonts for typography, which does not set cookies. Data collected via email is retained only for as long as necessary for the purpose for which it was collected." },
           { h: "Your rights", p: "You have the right to access your data, rectify it, erase it, restrict its processing, object to it and request its portability, as well as to withdraw consent. To exercise your rights, write to contact@traenthub.com. You also have the right to lodge a complaint with the supervisory authority." }
         ]
       },
@@ -235,10 +237,9 @@ const translations = {
         intro: "This policy describes how the site uses cookies.",
         sections: [
           { h: "What cookies are", p: "Cookies are small text files that visited websites save on your device to store information useful for the service." },
-          { h: "Technical cookies", p: "The site uses only technical cookies necessary for correct operation, which do not require consent under current regulations." },
-          { h: "Third-party cookies", p: "Embedding the Google Maps map may result in cookies being set by Google. The management of these cookies is governed by Google's policy." },
-          { h: "Profiling cookies", p: "The site does not use profiling or marketing cookies." },
-          { h: "Managing cookies", p: "You can manage or disable cookies at any time through your browser settings. Disabling them may limit some features, such as viewing the map." }
+          { h: "Site cookies", p: "This site does not set any cookies: no technical, analytical, or profiling cookies." },
+          { h: "Third-party resources", p: "The map is a static image based on OpenStreetMap data, hosted directly on the site. Typography is loaded from Google Fonts; this service does not set cookies." },
+          { h: "Managing cookies", p: "You can still manage or disable cookies at any time through your browser settings." }
         ]
       }
     }
@@ -702,23 +703,51 @@ export default function App() {
                 </div>
                 <div>
                   <div className="font-mono text-[10px] tracking-widest text-warm-300 uppercase mb-2">Coordinates</div>
-                  <div className="font-mono text-xs tracking-widest text-pop font-medium">43.7167° N, 10.4014° E</div>
+                  <div className="font-mono text-xs tracking-widest text-pop font-medium">43.7167° N, 10.4023° E</div>
                 </div>
               </div>
             </div>
-            <div className="border-l border-black/5 relative min-h-[400px] md:min-h-full overflow-hidden">
-              <iframe 
-                src="https://maps.google.com/maps?q=Borgo%20Stretto%203,%20Pisa&t=&z=15&ie=UTF8&iwloc=&output=embed" 
-                width="100%" 
-                height="100%" 
-                style={{ border: 0, filter: 'grayscale(1) contrast(1.2) opacity(0.8)' }} 
-                allowFullScreen={true} 
-                loading="lazy" 
-                referrerPolicy="no-referrer-when-downgrade"
-                className="absolute inset-0"
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=43.716694,10.402333"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={t.location.mapBtn}
+              className="border-l border-black/5 relative block min-h-[400px] md:min-h-full overflow-hidden group"
+            >
+              <img
+                src="/map.png"
+                alt="Mappa della posizione di Traent Hub, Borgo Stretto 3, Pisa"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                style={{ filter: "grayscale(1) contrast(1.1) brightness(0.97)" }}
               />
-              <div className="absolute inset-0 pointer-events-none border-l border-black/5" />
-            </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/45 via-transparent to-transparent pointer-events-none" />
+
+              {/* location pin (centered exactly on the coordinate) */}
+              <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-full pointer-events-none drop-shadow-[0_4px_6px_rgba(0,0,0,0.35)]">
+                <svg width="34" height="45" viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M12 0C5.4 0 0 5.4 0 12c0 7.5 12 20 12 20s12-12.5 12-20c0-6.6-5.4-12-12-12z" fill="#ff3d00" />
+                  <circle cx="12" cy="12" r="4.5" fill="#f5f2ed" />
+                </svg>
+              </div>
+
+              {/* attribution (OpenStreetMap data license) */}
+              <span className="absolute top-5 right-5 z-10 font-mono text-[8px] tracking-wider uppercase text-ink/50 bg-paper/70 backdrop-blur-sm px-2 py-1 rounded pointer-events-none">© OpenStreetMap</span>
+
+              {/* address chip */}
+              <div className="absolute top-6 left-6 pointer-events-none">
+                <div className="inline-flex bg-paper/90 backdrop-blur-sm rounded-full px-4 py-2 border border-black/5 shadow-sm">
+                  <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-warm-500 font-medium">Borgo Stretto 3 · Pisa</span>
+                </div>
+              </div>
+
+              {/* CTA */}
+              <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between gap-3 pointer-events-none">
+                <span className="text-[11px] tracking-[0.12em] uppercase text-paper/90 font-medium drop-shadow-sm">{t.location.mapBtn}</span>
+                <span className="w-10 h-10 rounded-full bg-paper flex items-center justify-center text-ink shadow-md group-hover:bg-pop group-hover:text-paper transition-all">
+                  <ArrowUpRight size={18} />
+                </span>
+              </div>
+            </a>
           </div>
         </div>
       </div>
