@@ -18,10 +18,10 @@ const GITHUB_URL = "https://github.com/TraentHub/traenthub-website";
 const LINKEDIN_URL = "https://www.linkedin.com/company/traent-hub/";
 
 const SPACE_SLIDE_PATHS = [
-  "/space/01-plaza.png",
-  "/space/06-main-hall.png",
-  "/space/05-historic-room.png",
-  "/space/04-presentations.png",
+  "/space/salone2.jpeg",
+  "/space/room1.jpeg",
+  "/space/salone1.jpeg",
+  "/space/hub.jpeg",
 ] as const;
 
 const translations = {
