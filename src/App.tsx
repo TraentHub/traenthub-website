@@ -6,11 +6,16 @@ import {
   Menu,
   X,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Github,
+  Linkedin
 } from "lucide-react";
 import { Logo } from "./components/Logo";
 
 type Language = "it" | "en";
+
+const GITHUB_URL = "https://github.com/TraentHub/traenthub-website";
+const LINKEDIN_URL = "https://www.linkedin.com/company/traent-hub/";
 
 const SPACE_SLIDE_PATHS = [
   "/space/01-plaza.png",
@@ -325,15 +330,35 @@ export default function App() {
               {t.nav.contact}
               <span className="absolute -bottom-1 left-0 w-full h-[1.5px] bg-pop scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
             </a>
-            <button 
+            <button
               onClick={toggleLang}
               className="font-mono text-[9px] tracking-wider px-3 py-1 border-1.5 border-ink rounded-full hover:bg-ink hover:text-paper transition-all"
             >
               {lang === "it" ? "EN" : "IT"}
             </button>
+            <div className="flex items-center gap-2 pl-1">
+              <a
+                href={GITHUB_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                className="text-warm-500 hover:text-ink transition-colors"
+              >
+                <Github size={18} />
+              </a>
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="text-warm-500 hover:text-ink transition-colors"
+              >
+                <Linkedin size={18} />
+              </a>
+            </div>
           </div>
-          
-          <button 
+
+          <button
             className="md:hidden p-2 text-ink"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
@@ -356,12 +381,20 @@ export default function App() {
             <a href="#space" onClick={() => setIsMenuOpen(false)} className="text-2xl font-display">{t.nav.space}</a>
             <a href="#manifesto" onClick={() => setIsMenuOpen(false)} className="text-2xl font-display">{t.nav.manifesto}</a>
             <a href="#contact" onClick={() => setIsMenuOpen(false)} className="text-2xl font-display">{t.nav.contact}</a>
-            <button 
+            <button
               onClick={() => { toggleLang(); setIsMenuOpen(false); }}
               className="font-mono text-xs border-1.5 border-ink px-4 py-2 rounded-full"
             >
               {lang === "it" ? "ENGLISH" : "ITALIANO"}
             </button>
+            <div className="flex items-center gap-6 mt-4">
+              <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-ink">
+                <Github size={26} />
+              </a>
+              <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-ink">
+                <Linkedin size={26} />
+              </a>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
