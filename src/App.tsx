@@ -13,10 +13,10 @@ import { Logo } from "./components/Logo";
 type Language = "it" | "en";
 
 const SPACE_SLIDE_PATHS = [
-  "/spazio/01-piazza.png",
-  "/spazio/06-sala-principale.png",
-  "/spazio/05-stanza-storica.png",
-  "/spazio/04-presentazioni.png",
+  "/space/01-plaza.png",
+  "/space/06-main-hall.png",
+  "/space/05-historic-room.png",
+  "/space/04-presentations.png",
 ] as const;
 
 const translations = {
