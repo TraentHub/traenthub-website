@@ -97,8 +97,8 @@ const translations = {
     },
     cta: {
       label: "Candidature",
-      title: "Vuoi far parte della prossima cohort?",
-      sub: "Le application aprono ogni trimestre. Raccontaci cosa stai costruendo e cosa porteresti alla community.",
+      title: "Vuoi entrare in Traent Hub?",
+      sub: "Compila il form: ci bastano due righe su di te, su come usi l'AI e su cosa stai costruendo.",
       btn: "Candidati ora"
     },
     footer: {
@@ -211,8 +211,8 @@ const translations = {
     },
     cta: {
       label: "Applications",
-      title: "Want to join the next cohort?",
-      sub: "Applications open every quarter. Tell us what you're building and what you'd bring to the community.",
+      title: "Want to join Traent Hub?",
+      sub: "Fill in the form: a few lines about you, how you use AI and what you're building are all we need.",
       btn: "Apply now"
     },
     footer: {
