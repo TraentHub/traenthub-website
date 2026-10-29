@@ -70,15 +70,15 @@ const copy = {
       linkedin: { label: "Profilo LinkedIn", placeholder: "https://www.linkedin.com/in/il-tuo-profilo" },
       occupation: {
         label: "Di cosa ti occupi?",
-        placeholder: "Lavoro, studio, ricerca… raccontaci cosa fai nella vita.",
+        placeholder: "Lavoro, studio, ricerca… dicci in due righe cosa fai.",
       },
       ai: {
         label: "Come usi l'AI?",
-        placeholder: "Strumenti, flussi di lavoro, esperimenti: nel lavoro e fuori.",
+        placeholder: "Quali strumenti usi e per cosa, al lavoro o nel tempo libero.",
       },
       projects: {
         label: "A quali progetti stai lavorando?",
-        placeholder: "Anche idee in fase iniziale: cosa stai costruendo e a che punto sei.",
+        placeholder: "Va bene anche un'idea appena nata: cosa stai costruendo e a che punto sei?",
       },
     },
     consent: {
@@ -90,7 +90,7 @@ const copy = {
     submitting: "Invio in corso…",
     success: {
       title: "Candidatura inviata.",
-      body: "Grazie! Abbiamo ricevuto la tua application e ti contatteremo all'email che ci hai indicato.",
+      body: "Grazie! Abbiamo ricevuto la tua candidatura e ti scriveremo all'email che ci hai indicato.",
     },
     errors: {
       required: "Campo obbligatorio.",
@@ -114,15 +114,15 @@ const copy = {
       linkedin: { label: "LinkedIn profile", placeholder: "https://www.linkedin.com/in/your-profile" },
       occupation: {
         label: "What do you do?",
-        placeholder: "Work, studies, research… tell us what you do for a living.",
+        placeholder: "Work, studies, research… tell us in a couple of lines what you do.",
       },
       ai: {
         label: "How do you use AI?",
-        placeholder: "Tools, workflows, experiments: at work and beyond.",
+        placeholder: "Which tools you use and for what, at work or in your free time.",
       },
       projects: {
         label: "What projects are you working on?",
-        placeholder: "Early-stage ideas count too: what you're building and where you are.",
+        placeholder: "A brand-new idea is fine too: what are you building and where are you at?",
       },
     },
     consent: {
