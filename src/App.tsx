@@ -11,6 +11,7 @@ import {
   Linkedin
 } from "lucide-react";
 import { Logo } from "./components/Logo";
+import { ApplicationForm } from "./components/ApplicationForm";
 
 type Language = "it" | "en";
 
@@ -31,6 +32,7 @@ const translations = {
       community: "Community",
       space: "Lo spazio",
       manifesto: "Manifesto",
+      apply: "Candidati",
       contact: "Contatti",
     },
     hero: {
@@ -94,6 +96,7 @@ const translations = {
       mapBtn: "Apri in Google Maps"
     },
     cta: {
+      label: "Candidature",
       title: "Vuoi far parte della prossima cohort?",
       sub: "Le application aprono ogni trimestre. Raccontaci cosa stai costruendo e cosa porteresti alla community.",
       btn: "Candidati ora"
@@ -108,19 +111,19 @@ const translations = {
     },
     legal: {
       close: "Chiudi",
-      updated: "Ultimo aggiornamento: giugno 2026",
+      updated: "Ultimo aggiornamento: ottobre 2026",
       privacy: {
         label: "Privacy",
         title: "Informativa sulla privacy",
         intro: "La presente informativa descrive come Traent Hub tratta i dati personali degli utenti del sito.",
         sections: [
           { h: "Titolare del trattamento", p: "Titolare del trattamento è Traent Hub, con sede in Via Borgo Stretto 3, Pisa. Per qualsiasi richiesta puoi scrivere a contact@traenthub.com." },
-          { h: "Dati che raccogliamo", p: "Il sito non richiede registrazione né raccoglie dati personali tramite form. L'unico canale di comunicazione è l'email: i dati che ci invii volontariamente vengono utilizzati esclusivamente per rispondere alla tua richiesta." },
+          { h: "Dati che raccogliamo", p: "Il sito non richiede registrazione. Se scegli di candidarti tramite il form, raccogliamo i dati che inserisci volontariamente: nome e cognome, email, eventuale altro contatto, profilo LinkedIn e le risposte alle domande su cosa fai, su come usi l'AI e sui progetti a cui lavori. Puoi anche scriverci via email: i dati che ci invii vengono utilizzati esclusivamente per rispondere alla tua richiesta." },
           { h: "Dati di navigazione", p: "I sistemi informatici possono acquisire, durante il normale funzionamento, dati la cui trasmissione è implicita nell'uso dei protocolli di rete (ad esempio indirizzi IP). Sono utilizzati soltanto per fini statistici anonimi e di sicurezza del sito." },
           { h: "Mappa", p: "La pagina Contatti mostra una mappa statica basata sui dati di OpenStreetMap (© OpenStreetMap contributors, licenza ODbL), ospitata direttamente sul sito: nessun servizio esterno viene caricato e nessun cookie viene impostato. Il link per aprire Google Maps viene caricato solo su tua esplicita richiesta, in una nuova scheda." },
           { h: "Cookie", p: "Per i cookie utilizzati si rinvia alla Cookie Policy." },
-          { h: "Base giuridica e finalità", p: "Il trattamento si basa sul tuo consenso e sul legittimo interesse a rispondere alle comunicazioni ricevute. Le finalità sono esclusivamente legate alla gestione delle richieste e al funzionamento del sito." },
-          { h: "Condivisione e conservazione", p: "I tuoi dati non vengono venduti né ceduti a terzi. L'unico servizio esterno utilizzato è Google Fonts per i caratteri tipografici, che non imposta cookie. I dati raccolti tramite email sono conservati per il tempo strettamente necessario alla finalità per cui sono stati raccolti." },
+          { h: "Base giuridica e finalità", p: "Il trattamento dei dati inviati tramite il form di candidatura si basa sul tuo consenso, che puoi revocare in qualsiasi momento, ed è finalizzato esclusivamente a valutare la candidatura e a contattarti. Per le comunicazioni via email si basa sul legittimo interesse a rispondere alle richieste ricevute. Le finalità sono comunque limitate alla gestione delle richieste e al funzionamento del sito." },
+          { h: "Condivisione e conservazione", p: "I tuoi dati non vengono venduti né ceduti a terzi. Le candidature inviate tramite il form sono archiviate in un foglio Google condiviso (Google Sheets), accessibile solo ai membri del team di Traent Hub incaricati di valutarle; Google agisce come fornitore del servizio. Il sito utilizza inoltre Google Fonts per i caratteri tipografici, che non imposta cookie. I dati sono conservati per il tempo strettamente necessario alla finalità per cui sono stati raccolti e cancellati su tua richiesta." },
           { h: "I tuoi diritti", p: "Hai diritto ad accedere ai tuoi dati, rettificarli, cancellarli, limitarne il trattamento, opporti e richiederne la portabilità, nonché a revocare il consenso. Per esercitare i tuoi diritti scrivi a contact@traenthub.com. Hai inoltre diritto di proporre reclamo al Garante per la protezione dei dati personali (www.garanteprivacy.org)." }
         ]
       },
@@ -143,6 +146,7 @@ const translations = {
       community: "Community",
       space: "The Space",
       manifesto: "Manifesto",
+      apply: "Apply",
       contact: "Contact",
     },
     hero: {
@@ -206,6 +210,7 @@ const translations = {
       mapBtn: "Open in Google Maps"
     },
     cta: {
+      label: "Applications",
       title: "Want to join the next cohort?",
       sub: "Applications open every quarter. Tell us what you're building and what you'd bring to the community.",
       btn: "Apply now"
@@ -220,19 +225,19 @@ const translations = {
     },
     legal: {
       close: "Close",
-      updated: "Last updated: June 2026",
+      updated: "Last updated: October 2026",
       privacy: {
         label: "Privacy",
         title: "Privacy Policy",
         intro: "This policy describes how Traent Hub handles the personal data of site users.",
         sections: [
           { h: "Data controller", p: "The data controller is Traent Hub, based at Via Borgo Stretto 3, Pisa. For any request, write to contact@traenthub.com." },
-          { h: "Data we collect", p: "The site does not require registration and does not collect personal data through forms. The only communication channel is email: any data you send us voluntarily is used solely to respond to your request." },
+          { h: "Data we collect", p: "The site does not require registration. If you choose to apply through the form, we collect the data you voluntarily enter: first and last name, email, an optional additional contact, your LinkedIn profile and your answers to the questions about what you do, how you use AI and the projects you are working on. You can also write to us by email: any data you send us is used solely to respond to your request." },
           { h: "Navigation data", p: "Computer systems may, during normal operation, acquire data whose transmission is implicit in the use of network protocols (such as IP addresses). These are used only for anonymous statistical and security purposes." },
           { h: "Map", p: "The Contact page shows a static map based on OpenStreetMap data (© OpenStreetMap contributors, ODbL license), hosted directly on the site: no external service is loaded and no cookies are set. The link to open Google Maps is loaded only at your explicit request, in a new tab." },
           { h: "Cookies", p: "For the cookies used, please refer to the Cookie Policy." },
-          { h: "Legal basis and purposes", p: "Processing is based on your consent and on the legitimate interest in responding to communications received. The purposes are solely related to handling requests and operating the site." },
-          { h: "Sharing and retention", p: "Your data is not sold or transferred to third parties. The only external service used is Google Fonts for typography, which does not set cookies. Data collected via email is retained only for as long as necessary for the purpose for which it was collected." },
+          { h: "Legal basis and purposes", p: "Processing of the data submitted through the application form is based on your consent, which you can withdraw at any time, and is solely aimed at evaluating your application and contacting you. For email communications it is based on the legitimate interest in responding to requests received. The purposes are in any case limited to handling requests and operating the site." },
+          { h: "Sharing and retention", p: "Your data is not sold or transferred to third parties. Applications submitted through the form are stored in a shared Google spreadsheet (Google Sheets), accessible only to the Traent Hub team members in charge of evaluating them; Google acts as a service provider. The site also uses Google Fonts for typography, which does not set cookies. Data is retained only for as long as necessary for the purpose for which it was collected and erased upon your request." },
           { h: "Your rights", p: "You have the right to access your data, rectify it, erase it, restrict its processing, object to it and request its portability, as well as to withdraw consent. To exercise your rights, write to contact@traenthub.com. You also have the right to lodge a complaint with the supervisory authority." }
         ]
       },
@@ -326,6 +331,10 @@ export default function App() {
               {t.nav.manifesto}
               <span className="absolute -bottom-1 left-0 w-full h-[1.5px] bg-pop scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
             </a>
+            <a href="#apply" className="text-[10px] tracking-[0.15em] uppercase font-medium text-warm-500 hover:text-ink transition-colors relative group">
+              {t.nav.apply}
+              <span className="absolute -bottom-1 left-0 w-full h-[1.5px] bg-pop scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+            </a>
             <a href="#contact" className="text-[10px] tracking-[0.15em] uppercase font-medium text-warm-500 hover:text-ink transition-colors relative group">
               {t.nav.contact}
               <span className="absolute -bottom-1 left-0 w-full h-[1.5px] bg-pop scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
@@ -380,6 +389,7 @@ export default function App() {
             <a href="#community" onClick={() => setIsMenuOpen(false)} className="text-2xl font-display">{t.nav.community}</a>
             <a href="#space" onClick={() => setIsMenuOpen(false)} className="text-2xl font-display">{t.nav.space}</a>
             <a href="#manifesto" onClick={() => setIsMenuOpen(false)} className="text-2xl font-display">{t.nav.manifesto}</a>
+            <a href="#apply" onClick={() => setIsMenuOpen(false)} className="text-2xl font-display">{t.nav.apply}</a>
             <a href="#contact" onClick={() => setIsMenuOpen(false)} className="text-2xl font-display">{t.nav.contact}</a>
             <button
               onClick={() => { toggleLang(); setIsMenuOpen(false); }}
@@ -449,6 +459,9 @@ export default function App() {
             <a href="#about" className="group inline-flex items-center gap-2.5 px-10 py-5 bg-ink text-paper text-[12px] font-semibold tracking-wider uppercase rounded-full hover:bg-pop hover:-translate-y-0.5 transition-all shadow-2xl shadow-pop/20">
               {t.hero.more}
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </a>
+            <a href="#apply" className="inline-flex items-center gap-2.5 px-10 py-5 border-1.5 border-ink text-ink text-[12px] font-semibold tracking-wider uppercase rounded-full hover:bg-ink hover:text-paper hover:-translate-y-0.5 transition-all">
+              {t.cta.btn}
             </a>
           </motion.div>
         </div>
@@ -717,6 +730,37 @@ export default function App() {
         </div>
       </section>
 
+      {/* Apply Section */}
+      <section id="apply" className="py-28 px-6 md:px-12 max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-[0.85fr_1.15fr] gap-14 lg:gap-24">
+          <div className="lg:sticky lg:top-28 self-start">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-2.5 h-2.5 rounded-full bg-pop" />
+              <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-warm-400 font-medium">{t.cta.label}</span>
+            </div>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="font-display text-[clamp(2.2rem,4.6vw,3.6rem)] leading-[1.1] tracking-tight mb-8"
+            >
+              {t.cta.title}
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-lg leading-relaxed text-warm-500 font-light max-w-[480px]"
+            >
+              {t.cta.sub}
+            </motion.p>
+          </div>
+
+          <ApplicationForm lang={lang} onOpenPrivacy={() => setModalContent("privacy")} />
+        </div>
+      </section>
+
       {/* Location Section */}
       <div id="contact" className="bg-cream border-y border-black/5">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
@@ -802,6 +846,7 @@ export default function App() {
                   <a href="#community" className="text-sm text-warm-500 hover:text-ink transition-colors font-light">{t.nav.community}</a>
                   <a href="#space" className="text-sm text-warm-500 hover:text-ink transition-colors font-light">{t.nav.space}</a>
                   <a href="#manifesto" className="text-sm text-warm-500 hover:text-ink transition-colors font-light">{t.nav.manifesto}</a>
+                  <a href="#apply" className="text-sm text-warm-500 hover:text-ink transition-colors font-light">{t.nav.apply}</a>
                   <a href="#contact" className="text-sm text-warm-500 hover:text-ink transition-colors font-light">{t.nav.contact}</a>
                 </div>
               </div>
