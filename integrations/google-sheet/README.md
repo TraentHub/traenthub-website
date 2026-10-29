@@ -8,7 +8,7 @@ web app. For every application it:
 2. sends a **confirmation email to the applicant** (in Italian or English, depending on the site language);
 3. sends a **"new application" email to the team**, with all the answers and a link to the sheet.
 
-The emails are HTML, styled like the website (same colors and wordmark), with a plain-text fallback. The wording is gender neutral.
+The emails are HTML, styled like the website (same colors, with the Traent Hub logo embedded in the script from `email-logo.png`), with a plain-text fallback. The wording is gender neutral.
 Their text lives in `sendConfirmation_` and `sendTeamNotification_` in `Code.gs`.
 
 ```
