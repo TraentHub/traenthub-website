@@ -23,6 +23,8 @@ const SENDER_NAME = "Traent Hub";
 //   NOTIFY_TO = name1@example.com, name2@example.com, name3@example.com
 const NOTIFY_PROPERTY = "NOTIFY_TO";
 
+const DATE_FORMAT = "dd/mm/yyyy hh:mm";
+
 const HEADERS = [
   "Data invio",
   "Nome",
@@ -74,18 +76,18 @@ function doPost(e) {
       if (error) return json_({ ok: false, error: error });
 
       submission = {
-        firstName: cell_(data.firstName),
-        lastName: cell_(data.lastName),
-        email: cell_(data.email),
-        altContact: cell_(data.altContact),
-        linkedin: cell_(data.linkedin),
-        occupation: cell_(data.occupation),
-        ai: cell_(data.ai),
-        projects: cell_(data.projects),
+        firstName: clean_(data.firstName),
+        lastName: clean_(data.lastName),
+        email: clean_(data.email),
+        altContact: clean_(data.altContact),
+        linkedin: clean_(data.linkedin),
+        occupation: clean_(data.occupation),
+        ai: clean_(data.ai),
+        projects: clean_(data.projects),
         lang: data.lang === "en" ? "en" : "it",
       };
 
-      getSheet_().appendRow([
+      appendApplication_(getSheet_(), [
         new Date(),
         submission.firstName,
         submission.lastName,
@@ -121,42 +123,77 @@ function doGet() {
 
 // ---------------------------------------------------------------- emails ---
 
+// Same palette as the website (see src/index.css).
+const BRAND = {
+  ink: "#0d0d0d",
+  paper: "#f5f2ed",
+  line: "#d9d4cb",
+  muted: "#6b655a",
+  soft: "#8a8478",
+  pop: "#ff3d00",
+};
+const FONT_SANS = "'Outfit',Helvetica,Arial,sans-serif";
+const FONT_SERIF = "'Playfair Display',Georgia,'Times New Roman',serif";
+
 function sendConfirmation_(s) {
   try {
     const en = s.lang === "en";
-    const subject = en
-      ? "We received your application to Traent Hub"
-      : "Abbiamo ricevuto la tua candidatura a Traent Hub";
-    const body = en
-      ? [
-          "Hi " + s.firstName + ",",
-          "",
-          "thanks for applying to Traent Hub! We've received your form and we'll read it carefully.",
-          "If we need anything else, or we'd like to get to know you better, we'll write to you at this address.",
-          "",
-          "Want to add something or have a question? Just reply to this email.",
-          "",
-          "See you soon,",
-          "The Traent Hub team",
-          "Via Borgo Stretto 3, Pisa",
-        ].join("\n")
-      : [
-          "Ciao " + s.firstName + ",",
-          "",
-          "grazie per esserti candidato a Traent Hub! Abbiamo ricevuto il tuo form e lo leggeremo con attenzione.",
-          "Se ci serve altro, o vogliamo conoscerti meglio, ti scriveremo a questo indirizzo.",
-          "",
-          "Vuoi aggiungere qualcosa o hai una domanda? Rispondi pure a questa email.",
-          "",
-          "A presto,",
-          "Il team di Traent Hub",
-          "Via Borgo Stretto 3, Pisa",
-        ].join("\n");
+    const copy = en
+      ? {
+          subject: "We received your application to Traent Hub",
+          preheader: "Thanks for applying: we'll read your application carefully.",
+          label: "Application received",
+          title: "Thank you, " + s.firstName,
+          paragraphs: [
+            "We've received your application to Traent Hub and we'll read it carefully.",
+            "If we need anything else, or we'd like to get to know you better, we'll write to you at this address.",
+            "Want to add something or have a question? Just reply to this email.",
+          ],
+          signoff: "See you soon,",
+          team: "The Traent Hub team",
+          footer: "You are receiving this email because you sent an application from our website.",
+        }
+      : {
+          subject: "Abbiamo ricevuto la tua candidatura a Traent Hub",
+          preheader: "Grazie per averci scritto: leggeremo la tua candidatura con attenzione.",
+          label: "Candidatura ricevuta",
+          title: "Grazie, " + s.firstName,
+          paragraphs: [
+            "Abbiamo ricevuto la tua candidatura a Traent Hub e la leggeremo con attenzione.",
+            "Se ci serve altro, o vogliamo conoscerti meglio, ti scriveremo a questo indirizzo.",
+            "Vuoi aggiungere qualcosa o hai una domanda? Rispondi pure a questa email.",
+          ],
+          signoff: "A presto,",
+          team: "Il team di Traent Hub",
+          footer: "Ricevi questa email perché hai inviato una candidatura dal nostro sito.",
+        };
+
+    const html = layout_(
+      copy.preheader,
+      label_(copy.label) +
+        '<h1 style="margin:0 0 24px 0;font-family:' + FONT_SERIF + ';font-size:32px;line-height:1.15;font-weight:700;color:' + BRAND.ink + ';">' +
+        esc_(copy.title) + '<span style="color:' + BRAND.pop + ';">.</span></h1>' +
+        copy.paragraphs.map(paragraph_).join("") +
+        '<p style="margin:28px 0 0 0;font-family:' + FONT_SANS + ';font-size:16px;line-height:1.6;color:' + BRAND.ink + ';">' +
+        esc_(copy.signoff) + '<br><strong>' + esc_(copy.team) + "</strong></p>",
+      copy.footer
+    );
+
+    const text = [
+      copy.title + ".",
+      "",
+      copy.paragraphs.join("\n\n"),
+      "",
+      copy.signoff,
+      copy.team,
+      "Via Borgo Stretto 3, Pisa",
+    ].join("\n");
 
     MailApp.sendEmail({
       to: s.email,
-      subject: subject,
-      body: body,
+      subject: copy.subject,
+      body: text,
+      htmlBody: html,
       name: SENDER_NAME,
       replyTo: REPLY_TO,
     });
@@ -173,10 +210,43 @@ function sendTeamNotification_(s) {
       return;
     }
 
-    const body = [
+    const fullName = s.firstName + " " + s.lastName;
+    const sheetUrl = SpreadsheetApp.getActiveSpreadsheet().getUrl();
+
+    const fields = [
+      ["Email", '<a href="mailto:' + esc_(s.email) + '" style="color:' + BRAND.ink + ';">' + esc_(s.email) + "</a>"],
+      ["Altro contatto", s.altContact ? esc_(s.altContact) : "—"],
+      ["LinkedIn", linkedinLink_(s.linkedin)],
+    ];
+    const answers = [
+      ["Di cosa si occupa", s.occupation],
+      ["Come usa l'AI", s.ai],
+      ["Progetti", s.projects],
+    ];
+
+    const html = layout_(
+      "Nuova candidatura da " + fullName,
+      label_("Nuova candidatura") +
+        '<h1 style="margin:0 0 24px 0;font-family:' + FONT_SERIF + ';font-size:30px;line-height:1.15;font-weight:700;color:' + BRAND.ink + ';">' +
+        esc_(fullName) + '<span style="color:' + BRAND.pop + ';">.</span></h1>' +
+        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 8px 0;">' +
+        fields.map(function (f) {
+          return '<tr><td style="padding:10px 0;border-top:1px solid ' + BRAND.line + ';width:130px;vertical-align:top;font-family:' + FONT_SANS + ';font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:' + BRAND.soft + ';">' +
+            esc_(f[0]) + '</td><td style="padding:10px 0;border-top:1px solid ' + BRAND.line + ';vertical-align:top;font-family:' + FONT_SANS + ';font-size:15px;line-height:1.5;color:' + BRAND.ink + ';">' + f[1] + "</td></tr>";
+        }).join("") +
+        "</table>" +
+        answers.map(function (a) {
+          return '<p style="margin:22px 0 6px 0;font-family:' + FONT_SANS + ';font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:' + BRAND.soft + ';">' + esc_(a[0]) + "</p>" +
+            '<p style="margin:0;font-family:' + FONT_SANS + ';font-size:15px;line-height:1.6;color:' + BRAND.ink + ';">' + multiline_(a[1]) + "</p>";
+        }).join("") +
+        '<p style="margin:32px 0 0 0;"><a href="' + esc_(sheetUrl) + '" style="display:inline-block;background:' + BRAND.ink + ';color:' + BRAND.paper + ';font-family:' + FONT_SANS + ';font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;padding:14px 26px;border-radius:999px;">Apri il foglio</a></p>',
+      "Rispondendo a questa email scrivi direttamente a " + fullName + "."
+    );
+
+    const text = [
       "Nuova candidatura dal sito di Traent Hub.",
       "",
-      "Nome: " + s.firstName + " " + s.lastName,
+      "Nome: " + fullName,
       "Email: " + s.email,
       "Altro contatto: " + (s.altContact || "—"),
       "LinkedIn: " + s.linkedin,
@@ -190,14 +260,15 @@ function sendTeamNotification_(s) {
       "Progetti:",
       s.projects,
       "",
-      "Tutte le candidature: " + SpreadsheetApp.getActiveSpreadsheet().getUrl(),
+      "Tutte le candidature: " + sheetUrl,
       "(Rispondendo a questa email scrivi direttamente al candidato.)",
     ].join("\n");
 
     MailApp.sendEmail({
       to: recipients.join(","),
-      subject: "Nuova candidatura: " + s.firstName + " " + s.lastName,
-      body: body,
+      subject: "Nuova candidatura: " + fullName,
+      body: text,
+      htmlBody: html,
       name: SENDER_NAME,
       replyTo: s.email,
     });
@@ -216,6 +287,58 @@ function getNotifyRecipients_() {
     .filter(function (address) {
       return EMAIL_RE.test(address);
     });
+}
+
+// --- email building blocks (inline CSS only: that's what email clients support) ---
+
+function layout_(preheader, innerHtml, footerText) {
+  return (
+    '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>' +
+    '<body style="margin:0;padding:0;background:' + BRAND.paper + ';">' +
+    '<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">' + esc_(preheader) + "</div>" +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + BRAND.paper + ';"><tr><td align="center" style="padding:32px 16px;">' +
+    '<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;">' +
+    '<tr><td style="padding:0 0 22px 2px;font-family:' + FONT_SANS + ';font-size:24px;font-weight:600;letter-spacing:-0.02em;color:' + BRAND.ink + ';">traent<span style="color:' + BRAND.pop + ';">.</span>hub</td></tr>' +
+    '<tr><td style="background:#ffffff;border:1px solid ' + BRAND.line + ';border-radius:12px;padding:36px 32px;">' + innerHtml + "</td></tr>" +
+    '<tr><td style="padding:20px 4px 0 4px;font-family:' + FONT_SANS + ';font-size:12px;line-height:1.7;color:' + BRAND.soft + ';">' +
+    esc_(footerText) + "<br>Traent Hub · Via Borgo Stretto 3, Pisa · " +
+    '<a href="mailto:' + REPLY_TO + '" style="color:' + BRAND.soft + ';">' + REPLY_TO + "</a></td></tr>" +
+    "</table></td></tr></table></body></html>"
+  );
+}
+
+function label_(text) {
+  return (
+    '<p style="margin:0 0 14px 0;font-family:' + FONT_SANS + ';font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:' + BRAND.muted + ';">' +
+    '<span style="color:' + BRAND.pop + ';">&#9679;</span>&nbsp; ' + esc_(text) + "</p>"
+  );
+}
+
+function paragraph_(text) {
+  return (
+    '<p style="margin:0 0 16px 0;font-family:' + FONT_SANS + ';font-size:16px;line-height:1.65;font-weight:300;color:' + BRAND.muted + ';">' +
+    esc_(text) + "</p>"
+  );
+}
+
+function linkedinLink_(url) {
+  // Only http(s) links are made clickable; anything else is shown as plain text.
+  return /^https?:\/\//i.test(url)
+    ? '<a href="' + esc_(url) + '" style="color:' + BRAND.ink + ';">' + esc_(url) + "</a>"
+    : esc_(url);
+}
+
+function esc_(value) {
+  return String(value == null ? "" : value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function multiline_(value) {
+  return esc_(value).replace(/\r?\n/g, "<br>");
 }
 
 // ------------------------------------------------------------ validation ---
@@ -241,19 +364,36 @@ function validate_(data) {
   return null;
 }
 
-// Trim, and neutralise spreadsheet formulas (=, +, -, @) so that user input is never evaluated.
-function cell_(value) {
-  const text = value == null ? "" : String(value).trim();
-  return /^[=+\-@]/.test(text) ? "'" + text : text;
+function clean_(value) {
+  return value == null ? "" : String(value).trim();
 }
 
 // ----------------------------------------------------------------- sheet ---
+
+// Writes one row. Every cell except the date is first formatted as plain text, so a value such as
+// "=IMPORTXML(...)" or "@username" is stored exactly as typed and never evaluated as a formula.
+function appendApplication_(sheet, values) {
+  const row = sheet.getLastRow() + 1;
+  const range = sheet.getRange(row, 1, 1, values.length);
+  const formats = values.map(function (_, i) {
+    return i === 0 ? DATE_FORMAT : "@";
+  });
+  range.setNumberFormats([formats]);
+  range.setValues([values]);
+}
 
 function getSheet_() {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = spreadsheet.getSheetByName(SHEET_NAME);
   if (!sheet) {
-    sheet = spreadsheet.insertSheet(SHEET_NAME);
+    // A brand-new spreadsheet has one empty tab ("Foglio1"/"Sheet1"): reuse it.
+    const existing = spreadsheet.getSheets();
+    if (existing.length === 1 && existing[0].getLastRow() === 0) {
+      sheet = existing[0];
+      sheet.setName(SHEET_NAME);
+    } else {
+      sheet = spreadsheet.insertSheet(SHEET_NAME);
+    }
   }
   if (sheet.getLastRow() === 0) {
     sheet.appendRow(HEADERS);
@@ -263,7 +403,7 @@ function getSheet_() {
       .setFontWeight("bold")
       .setBackground("#0d0d0d")
       .setFontColor("#f5f2ed");
-    sheet.getRange("A:A").setNumberFormat("dd/mm/yyyy hh:mm");
+    sheet.getRange("A:A").setNumberFormat(DATE_FORMAT);
     sheet.setColumnWidth(1, 130);
     sheet.setColumnWidths(2, 5, 170);
     sheet.setColumnWidths(7, 3, 320);

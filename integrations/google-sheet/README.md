@@ -8,6 +8,9 @@ web app. For every application it:
 2. sends a **confirmation email to the applicant** (in Italian or English, depending on the site language);
 3. sends a **"new application" email to the team**, with all the answers and a link to the sheet.
 
+The emails are HTML, styled like the website (same colors and wordmark), with a plain-text fallback. The wording is gender neutral.
+Their text lives in `sendConfirmation_` and `sendTeamNotification_` in `Code.gs`.
+
 ```
 website form ── POST (JSON, text/plain) ──▶ Apps Script web app ──▶ "Candidature" tab
                                                       └──▶ confirmation email + team notification
@@ -26,7 +29,7 @@ website form ── POST (JSON, text/plain) ──▶ Apps Script web app ──
    The addresses live here and not in the code on purpose: this repository is public.
 4. Select the function **`setup`** in the editor toolbar and click **Run**. Accept the permission prompts
    (access to the spreadsheet and sending email). It renames the spreadsheet to
-   *"Traent Hub – Candidature dal sito"* and creates the **Candidature** tab with its formatted header row.
+   *"Traent Hub – Candidature dal sito"* and turns the empty first tab into the **Candidature** tab, with its formatted header row.
 5. Click **Deploy → New deployment**, choose type **Web app** and set:
    - **Execute as:** *Me* (so the script can write to the sheet and send email)
    - **Who has access:** *Anyone* (the website must be able to call it without a Google login)
@@ -76,7 +79,7 @@ Creating a *new* deployment instead would generate a new URL. If a new permissio
 ## What the script does
 
 - Validates required fields, email and LinkedIn URL formats, privacy consent and maximum lengths.
-- Prefixes values starting with `=`, `+`, `-` or `@` with `'`, so nothing typed in the form can run as a spreadsheet formula.
+- Stores every answer as **plain text, exactly as typed**: a value starting with `=`, `+`, `-` or `@` (for example a Telegram `@username`) is never run as a spreadsheet formula.
 - Uses a script lock so that simultaneous submissions don't overwrite each other.
 - The form itself adds a hidden honeypot field to filter out simple bots (those submissions are never sent).
 
