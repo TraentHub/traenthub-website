@@ -60,7 +60,7 @@ Open the `/exec` URL in a browser: it should answer `{"ok":true,"service":"traen
 Then submit a test application **using your own email address** (you'll receive the confirmation, and the team gets the notification):
 
 ```sh
-curl -L -X POST '<WEB_APP_URL>' --data '{
+curl -L '<WEB_APP_URL>' --data '{
   "firstName": "Test", "lastName": "User", "email": "<YOUR_EMAIL>",
   "altContact": "", "linkedin": "https://www.linkedin.com/in/test",
   "occupation": "test", "ai": "test", "projects": "test",
@@ -68,6 +68,10 @@ curl -L -X POST '<WEB_APP_URL>' --data '{
 }'
 # → {"ok":true}
 ```
+
+> Don't add `-X POST`: Apps Script answers with a redirect, and forcing POST on the redirected request makes
+> Google show a "Pagina non trovata / Page not found" page even though the application was saved.
+> With `--data` alone curl does the right thing.
 
 Delete the test row from the sheet afterwards.
 
