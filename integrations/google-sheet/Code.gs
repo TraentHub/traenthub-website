@@ -13,10 +13,8 @@
 const SPREADSHEET_NAME = "Traent Hub – Candidature dal sito";
 const SHEET_NAME = "Candidature";
 
-// Public address applicants can reply to. The emails are *sent* from the Google
-// account that deployed this script; replies are routed here.
+// Public address applicants can reply to. Microsoft Graph sends from this mailbox.
 const REPLY_TO = "contact@traenthub.com";
-const SENDER_NAME = "Traent Hub";
 
 // Team addresses are NOT stored in the code (the repository is public).
 // Set them in Apps Script → Project Settings → Script properties:
@@ -49,13 +47,13 @@ const LINKEDIN_RE = /^https?:\/\/([a-z]{2,3}\.)?linkedin\.com\/(in|pub)\/[^\s/?#
 /**
  * Run this ONCE from the Apps Script editor (select "setup" → Run).
  * It names the spreadsheet, creates the tab with a formatted header row, and
- * asks for the permissions the script needs (sheet access + sending email).
+ * asks for the permissions the script needs (sheet access + external requests).
  */
 function setup() {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   spreadsheet.rename(SPREADSHEET_NAME);
   getSheet_();
-  MailApp.getRemainingDailyQuota(); // triggers the "send email" authorization prompt
+  ScriptApp.requireScopes(ScriptApp.AuthMode.FULL, ["https://www.googleapis.com/auth/script.external_request"]);
   const recipients = getNotifyRecipients_();
   console.log(
     recipients.length
@@ -179,25 +177,7 @@ function sendConfirmation_(s) {
       copy.footer
     );
 
-    const text = [
-      copy.title + ".",
-      "",
-      copy.paragraphs.join("\n\n"),
-      "",
-      copy.signoff,
-      copy.team,
-      "Via Borgo Stretto 3, Pisa",
-    ].join("\n");
-
-    MailApp.sendEmail({
-      to: s.email,
-      subject: copy.subject,
-      body: text,
-      htmlBody: html,
-      inlineImages: { logo: logoBlob_() },
-      name: SENDER_NAME,
-      replyTo: REPLY_TO,
-    });
+    sendGraphEmail_([s.email], copy.subject, html, REPLY_TO);
   } catch (err) {
     console.error("Confirmation email failed", err);
   }
@@ -244,38 +224,55 @@ function sendTeamNotification_(s) {
       "Rispondendo a questa email scrivi direttamente a " + fullName + "."
     );
 
-    const text = [
-      "Nuova candidatura dal sito di Traent Hub.",
-      "",
-      "Nome: " + fullName,
-      "Email: " + s.email,
-      "Altro contatto: " + (s.altContact || "—"),
-      "LinkedIn: " + s.linkedin,
-      "",
-      "Di cosa si occupa:",
-      s.occupation,
-      "",
-      "Come usa l'AI:",
-      s.ai,
-      "",
-      "Progetti:",
-      s.projects,
-      "",
-      "Tutte le candidature: " + sheetUrl,
-      "(Rispondendo a questa email scrivi direttamente al candidato.)",
-    ].join("\n");
-
-    MailApp.sendEmail({
-      to: recipients.join(","),
-      subject: "Nuova candidatura: " + fullName,
-      body: text,
-      htmlBody: html,
-      inlineImages: { logo: logoBlob_() },
-      name: SENDER_NAME,
-      replyTo: s.email,
-    });
+    sendGraphEmail_(recipients, "Nuova candidatura: " + fullName, html, s.email);
   } catch (err) {
     console.error("Team notification failed", err);
+  }
+}
+
+// Credentials are script properties, never values embedded in the public website.
+function sendGraphEmail_(recipients, subject, html, replyTo) {
+  const properties = PropertiesService.getScriptProperties();
+  const tenant = properties.getProperty("MS_TENANT_ID");
+  const client = properties.getProperty("MS_CLIENT_ID");
+  const secret = properties.getProperty("MS_CLIENT_SECRET");
+  const mailbox = properties.getProperty("MS_SENDER_MAILBOX");
+  if (!tenant || !client || !secret || !mailbox) {
+    throw new Error("Missing Microsoft Graph configuration in script properties");
+  }
+
+  const tokenResponse = UrlFetchApp.fetch(
+    "https://login.microsoftonline.com/" + encodeURIComponent(tenant) + "/oauth2/v2.0/token",
+    { method: "post", payload: {
+      client_id: client,
+      client_secret: secret,
+      scope: "https://graph.microsoft.com/.default",
+      grant_type: "client_credentials",
+    }, muteHttpExceptions: true }
+  );
+  if (tokenResponse.getResponseCode() !== 200) {
+    throw new Error("Microsoft token request failed (HTTP " + tokenResponse.getResponseCode() + ")");
+  }
+  const token = JSON.parse(tokenResponse.getContentText()).access_token;
+  if (!token) throw new Error("Microsoft token response did not contain an access token");
+
+  const response = UrlFetchApp.fetch(
+    "https://graph.microsoft.com/v1.0/users/" + encodeURIComponent(mailbox) + "/sendMail",
+    { method: "post", contentType: "application/json", headers: { Authorization: "Bearer " + token },
+      payload: JSON.stringify({ message: {
+        subject: subject,
+        body: { contentType: "HTML", content: html },
+        toRecipients: recipients.map(function (address) { return { emailAddress: { address: address } }; }),
+        replyTo: [{ emailAddress: { address: replyTo } }],
+        attachments: [{
+          "@odata.type": "#microsoft.graph.fileAttachment",
+          name: "logo.png", contentType: "image/png", contentId: "logo", isInline: true,
+          contentBytes: LOGO_PNG_BASE64,
+        }],
+      } }), muteHttpExceptions: true }
+  );
+  if (response.getResponseCode() !== 202) {
+    throw new Error("Microsoft Graph sendMail failed (HTTP " + response.getResponseCode() + ")");
   }
 }
 
@@ -424,10 +421,6 @@ function json_(payload) {
 
 // Traent Hub logo (transparent PNG, 324x106, shown at 162x53 for sharp screens), embedded so the
 // emails don't depend on any hosted image. Source file: email-logo.png in this folder.
-function logoBlob_() {
-  return Utilities.newBlob(Utilities.base64Decode(LOGO_PNG_BASE64), "image/png", "logo.png");
-}
-
 const LOGO_PNG_BASE64 =
   "iVBORw0KGgoAAAANSUhEUgAAAUQAAABqCAMAAADz5dgGAAAAkFBMVEUA8QD59/IAAAABAAAAAgMAAAACAQnlLAAAAAL/5usAAQLy" +
   "3P7z/twEARYFAyziLADlAgnkLAAAFS3mKADkLQDsFwACA0fkKwDnMgDlMAAAEkvWBQDiMADqtf8AER8rADZLAELeJgD0MADlMADk" +
