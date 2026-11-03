@@ -8,7 +8,7 @@ web app. For every application it:
 2. sends a **confirmation email to the applicant** (in Italian or English, depending on the site language);
 3. sends a **"new application" email to the team**, with all the answers and a link to the sheet.
 
-The emails are HTML, styled like the website (same colors, with the Traent Hub logo embedded in the script from `email-logo.png`), with a plain-text fallback. The wording is gender neutral.
+The emails are HTML, styled like the website (same colors, with the Traent Hub logo embedded in the script from `email-logo.png`). The wording is gender neutral.
 Their text lives in `sendConfirmation_` and `sendTeamNotification_` in `Code.gs`.
 
 ```
@@ -16,7 +16,25 @@ website form ── POST (JSON, text/plain) ──▶ Apps Script web app ──
                                                       └──▶ confirmation email + team notification
 ```
 
-## Setup (one-time)
+## Microsoft 365 setup
+
+This integration requires a Microsoft 365 work or school tenant and an Exchange Online mailbox. It uses application permissions, so a tenant administrator must configure and approve it. A personal Microsoft account is not supported by this setup.
+
+1. In Microsoft Entra ID, register a single-tenant application. Record the **tenant ID** and **application (client) ID**.
+2. Grant the app the Exchange Online **Application Mail.Send** role scoped to the sender mailbox using [Exchange Online application RBAC](https://learn.microsoft.com/en-us/exchange/permissions-exo/application-rbac). Do not also grant an unscoped Microsoft Graph `Mail.Send` application permission in Entra: permissions are additive and that would allow sending as other mailboxes. Test both an allowed and a disallowed mailbox.
+3. Create a client secret and record its **value** securely. Set an expiry and a rotation reminder. Treat project editors as able to access the secret and send email as the mailbox; limit editor access accordingly.
+4. In Apps Script **Project Settings → Script properties**, add these properties alongside `NOTIFY_TO`:
+
+   | Property | Value |
+   |---|---|
+   | `MS_TENANT_ID` | Microsoft Entra tenant ID |
+   | `MS_CLIENT_ID` | Application (client) ID |
+   | `MS_CLIENT_SECRET` | Client secret value |
+   | `MS_SENDER_MAILBOX` | Mailbox user principal name or ID, e.g. `contact@traenthub.com` |
+
+   Update the secret property when rotating the credential. Do not commit it or put it in a Vite environment variable. `MS_SENDER_MAILBOX` must identify a mailbox, not merely an unresolvable alias. Set `REPLY_TO` in `Code.gs` if the public reply address differs.
+
+## Google Apps Script setup (one-time)
 
 1. **Open the shared Google Sheet** that will receive the applications.
 2. Go to **Extensions → Apps Script** and replace the contents of `Code.gs` with the file in this folder.
@@ -28,7 +46,7 @@ website form ── POST (JSON, text/plain) ──▶ Apps Script web app ──
 
    The addresses live here and not in the code on purpose: this repository is public.
 4. Select the function **`setup`** in the editor toolbar and click **Run**. Accept the permission prompts
-   (access to the spreadsheet and sending email). It renames the spreadsheet to
+   (access to the spreadsheet and external requests). It renames the spreadsheet to
    *"Traent Hub – Candidature dal sito"* and turns the empty first tab into the **Candidature** tab, with its formatted header row.
 5. Click **Deploy → New deployment**, choose type **Web app** and set:
    - **Execute as:** *Me* (so the script can write to the sheet and send email)
@@ -40,15 +58,12 @@ website form ── POST (JSON, text/plain) ──▶ Apps Script web app ──
      (Vite inlines it at build time, so **rebuild/redeploy the site after changing it**).
 
 > The web app URL is embedded in the public site, so treat it as public. It can
-> only append validated rows and send the two emails; it cannot read or change anything.
+> only append validated rows and send the two emails; it cannot read or change anything. Public endpoints can be abused, so monitor execution and mail quotas.
 
 ## About the emails
 
-- They are **sent from the Google account that deployed the script** (the one you were logged in with in step 5).
-  Replies to the applicant's confirmation go to `contact@traenthub.com` (`REPLY_TO` in `Code.gs`);
-  replies to the team notification go straight to the applicant.
-- Each application sends **2 emails**. Google limits scripts to about **100 recipients/day on a free Gmail
-  account** and about 1,500/day on Google Workspace, which is plenty for an application form.
+- They are sent from `MS_SENDER_MAILBOX` through Microsoft Graph. Replies to the applicant's confirmation go to `contact@traenthub.com` (`REPLY_TO` in `Code.gs`); replies to the team notification go straight to the applicant.
+- Each application sends up to **2 emails**. Microsoft and Apps Script quotas apply. A Graph `202 Accepted` response means the message was accepted for processing, not that delivery is guaranteed.
 - Email is *best effort*: if sending fails (quota, a typo in an address…) the application is still saved in the sheet
   and the applicant still sees the success message. Check **Executions** in the Apps Script editor if emails seem to be missing.
 - To change who receives the notifications, just edit the `NOTIFY_TO` property: no redeploy needed.
@@ -57,7 +72,7 @@ website form ── POST (JSON, text/plain) ──▶ Apps Script web app ──
 
 Open the `/exec` URL in a browser: it should answer `{"ok":true,"service":"traenthub-applications"}`.
 
-Then submit a test application **using your own email address** (you'll receive the confirmation, and the team gets the notification):
+Before deploying, verify the Microsoft app is limited to the intended mailbox. Then submit a test application **using your own email address** (you'll receive the confirmation, and the team gets the notification):
 
 ```sh
 curl -L '<WEB_APP_URL>' --data '{
@@ -66,7 +81,7 @@ curl -L '<WEB_APP_URL>' --data '{
   "occupation": "test", "ai": "test", "projects": "test",
   "consent": true, "lang": "it"
 }'
-# → {"ok":true}
+# → {"ok":true}; check both inboxes and Apps Script Executions as well
 ```
 
 > Don't add `-X POST`: Apps Script answers with a redirect, and forcing POST on the redirected request makes
